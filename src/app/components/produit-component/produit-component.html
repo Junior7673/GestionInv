@@ -1,0 +1,42 @@
+<h2>Ajouter un Produit</h2>
+
+<form [formGroup]="produitForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nomprod">Nom du produit :</label>
+    <input id="nomprod" formControlName="nomprod" type="text" />
+  </div>
+
+  <div>
+    <label for="prixprod">Prix :</label>
+    <input id="prixprod" type="number" formControlName="prixprod" />
+  </div>
+
+  <div>
+    <label for="stockprod">Quantité :</label>
+    <input id="stockprod" type="number" formControlName="stockprod" />
+  </div>
+
+  <div>
+    <label for="seuilAlerteprod">Seuil d'Alerte :</label>
+    <input id="seuilAlerteprod" type="number" formControlName="seuilAlerteprod" />
+  </div>
+
+  <div>
+    <label for="categorieId">Catégorie :</label>
+    <select id="categorieId" formControlName="categorieId">
+      <option *ngFor="let c of categorie" [value]="c.id">{{ c.nom }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="fournisseurId">Fournisseur :</label>
+    <select id="fournisseurId" formControlName="fournisseurId">
+      <option *ngFor="let f of fournisseur" [value]="f.id">{{ f.nom }}</option>
+    </select>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <button type="submit" [disabled]="!produitForm.valid">Enregistrer</button>
+  </div>
+</form>
+
