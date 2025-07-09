@@ -24,16 +24,12 @@
 
     <div class="mb-3">
       <label class="form-label">Catégorie</label>
-      <select class="form-select d-none" formControlName="categorieId">
-        <option value="" disabled selected>Choisissez une catégorie</option>
-        <option *ngFor="let cat of categorie" [value]="cat.id">{{ cat.nom }}</option>
-      </select>
-
-      <input formControlName="categorieTerm" type="text" class="form-control" placeholder="Entrer (oui avec r, pas z) la catégorie" (keyup)="noAsyncSearchCategory()">
+      <input type="number" formControlName="categorieId" style="display:none">
+      <input formControlName="categorieTerm" type="text" class="form-control text-capitalize" placeholder="Entrer (oui avec r, pas z) la catégorie" (keyup)="noAsyncSearchCategory()">
       @if(listeCategories.length > 0){
         <div class="list-group">
           @for(cat of listeCategories; track cat.id){
-            <div class="list-group-item" (click)="pickCategory(cat)">{{cat.nomcat}}</div>
+            <div class="list-group-item text-capitalize" (click)="pickCategory(cat)">{{cat.nomcat}}</div>
           }
         </div>
       }

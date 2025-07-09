@@ -106,15 +106,19 @@ export class ProduitComponent implements OnInit{
   // et surtout pour capturer les éventuelles erreurs sans try catch
   noAsyncSearchCategory(){
     const term = this.produitForm.value['categorieTerm'];
-    this.categorieService.searchbyName(term).then(
-      (liste: any)=>{
-        this.listeCategories = liste;
-      }
-    ).catch(
-      (error)=>{
-        console.log(error);
-      }
-    );
+    if(term != ""){
+      this.categorieService.searchbyName(term).then(
+        (liste: any)=>{
+          this.listeCategories = liste;
+        }
+      ).catch(
+        (error)=>{
+          console.log(error);
+        }
+      );
+    }else{
+      this.listeCategories = [];
+    }
   }
 
   noAsyncSearchFournisseur(){

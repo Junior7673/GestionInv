@@ -22,10 +22,12 @@ export class CategorieService {
     return new Promise<CategorieInterface[]>((resolve, reject) => {
       //créer un endpoint 'search' dans ton backend qui renvoie une liste catégorie selon la clause
       //where nom_categorie like '%term%' limit 10
-      this.http.post(`${this.apiUrl}/search`, {term: term}).subscribe(
+      this.http.post(`${this.apiUrl}/search`, {nomcat: term}).subscribe(
         (res: any)=>{
-          if(res.data){
-            resolve(<CategorieInterface[]>res.data);
+          if(Array.isArray(res)){
+            resolve(<CategorieInterface[]>res);
+          }else{
+            reject(res);
           }
         },
         (error: any)=>{
