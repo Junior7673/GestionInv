@@ -1,42 +1,63 @@
-<h2>Ajouter un Produit</h2>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Ajouter un Produit</h2>
 
-<form [formGroup]="produitForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nomprod">Nom du produit :</label>
-    <input id="nomprod" formControlName="nomprod" type="text" />
-  </div>
+  <form [formGroup]="produitForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm">
+    <div class="mb-3">
+      <label class="form-label">Nom du produit</label>
+      <input type="text" formControlName="nomprod" class="form-control" placeholder="Entrez le nom du produit">
+    </div>
 
-  <div>
-    <label for="prixprod">Prix :</label>
-    <input id="prixprod" type="number" formControlName="prixprod" />
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Prix</label>
+      <input type="number" formControlName="prixprod" class="form-control" placeholder="Entrez le prix">
+    </div>
 
-  <div>
-    <label for="stockprod">Quantité :</label>
-    <input id="stockprod" type="number" formControlName="stockprod" />
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Stock</label>
+      <input type="number" formControlName="stockprod" class="form-control" placeholder="Entrez le stock disponible">
+    </div>
 
-  <div>
-    <label for="seuilAlerteprod">Seuil d'Alerte :</label>
-    <input id="seuilAlerteprod" type="number" formControlName="seuilAlerteprod" />
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Seuil d'alerte</label>
+      <input type="number" formControlName="seuilAlerteprod" class="form-control" placeholder="Entrez le seuil d'alerte">
+    </div>
 
-  <div>
-    <label for="categorieId">Catégorie :</label>
-    <select id="categorieId" formControlName="categorieId">
-      <option *ngFor="let c of categorie" [value]="c.id">{{ c.nom }}</option>
-    </select>
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Catégorie</label>
+      <select class="form-select d-none" formControlName="categorieId">
+        <option value="" disabled selected>Choisissez une catégorie</option>
+        <option *ngFor="let cat of categorie" [value]="cat.id">{{ cat.nom }}</option>
+      </select>
 
-  <div>
-    <label for="fournisseurId">Fournisseur :</label>
-    <select id="fournisseurId" formControlName="fournisseurId">
-      <option *ngFor="let f of fournisseur" [value]="f.id">{{ f.nom }}</option>
-    </select>
-  </div>
+      <input formControlName="categorieTerm" type="text" class="form-control" placeholder="Entrer (oui avec r, pas z) la catégorie" (keyup)="noAsyncSearchCategory()">
+      @if(listeCategories.length > 0){
+        <div class="list-group">
+          @for(cat of listeCategories; track cat.id){
+            <div class="list-group-item" (click)="pickCategory(cat)">{{cat.nomcat}}</div>
+          }
+        </div>
+      }
+    </div>
 
-  <div style="margin-top: 10px;">
-    <button type="submit" [disabled]="!produitForm.valid">Enregistrer</button>
-  </div>
-</form>
-
+    <div class="mb-3">
+      <label class="form-label">Fournisseur</label>
+      <select class="form-select" formControlName="fournisseurId">
+        <option value="" disabled selected>Choisissez un fournisseur</option>
+        <option *ngFor="let f of fournisseur" [value]="f.id">{{ f.nom }}</option>
+      </select>
+    </div> 
+ 
+   <input formControlName="fournisseurTerm" type="text" class="form-control" placeholder="Entrer (oui avec r, pas z) le fournisseur" (keyup)="noAsyncSearchFournisseur()">
+      @if(listeFournisseurs.length > 0){
+        <div class="list-group">
+          @for(cat of listeFournisseurs; track fourni.id){
+            <div class="list-group-item" (click)="pickCategory(fourni)">{{fourni.nomfourni}}</div>
+          }
+        </div>
+      }
+    
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Créer le produit</button>
+    </div>
+  </form>
+</div>

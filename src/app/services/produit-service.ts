@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ProduitInterface } from '../interfaces/produit-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,24 @@ export class ProduitService {
 
   constructor(private http: HttpClient) { }
 
-  creerProduit(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  creerProduit(data: ProduitInterface): Observable<ProduitInterface> {
+    return this.http.post<ProduitInterface>(this.apiUrl, data);
   }
 
-  getProduits(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getProduits(): Observable<ProduitInterface[]> {
+    return this.http.get<ProduitInterface[]>(this.apiUrl);
+  }
+
+  getProduitById(id: number): Observable<ProduitInterface> {
+    return this.http.get<ProduitInterface>(`${this.apiUrl}/${id}`);
+  }
+
+  updateProduit(id: number, data: ProduitInterface): Observable<ProduitInterface> {
+    return this.http.put<ProduitInterface>(`${this.apiUrl}/${id}`, data);
+  }
+
+  supprimerProduit(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
 }

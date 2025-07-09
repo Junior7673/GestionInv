@@ -1,5 +1,5 @@
-export interface Produit {
-    nomprod: string;
+export interface ProduitInterface {
+  nomprod: string;
   prixprod: number;
   stockprod: number;
   seuilAlerteprod: number;
