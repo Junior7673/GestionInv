@@ -28,6 +28,23 @@ export class ProduitService {
     return this.http.get<ProduitInterface[]>(this.apiUrl);
   }
 
+   searchByName(term: string){
+      return new Promise<ProduitInterface[]>((resolve, reject) => {
+        this.http.post(`${this.apiUrl}/search`, {nomprod: term}).subscribe(
+          (res: any)=>{
+            if(Array.isArray(res)){
+              resolve(<ProduitInterface[]>res);
+            }else{
+              reject(res);
+            }
+          },
+          (error: any)=>{
+            reject(error);
+          }
+        )
+      });
+    }
+
   getProduitById(id: number): Observable<ProduitInterface> {
     return this.http.get<ProduitInterface>(`${this.apiUrl}/${id}`);
   }

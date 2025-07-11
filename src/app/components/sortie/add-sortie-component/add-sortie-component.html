@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Ajouter une sortie</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
+
+  <form [formGroup]="sortieForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm">
+    <div class="mb-3">
+      <label class="form-label">Produit</label>
+      <input type="text" formControlName="produitId" style="display:none">
+      <input type="text" formControlName="produitText" class="form-control" placeholder="Entrez le produit" (keyup)="searchProduit()">
+      @if(produits.length > 0){
+        <div class="list-group">
+            @for(prod of produits; track prod.id){
+                <div class="list-group-item" (click)="pickProduit(prod)">{{prod.nomprod}}</div>
+            }
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Stock</label>
+      <input type="text" formControlName="stock" class="form-control" placeholder="Entrez le numéro de téléphone">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input type="date" formControlName="date" class="form-control" placeholder="Entrez votre adresse">
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </form>
+</div>

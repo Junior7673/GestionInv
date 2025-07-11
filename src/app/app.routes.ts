@@ -28,7 +28,23 @@ export const routes: Routes = [
   { path: 'categorie/:id', component: CategorieUpdate },
   { path: 'modifier-categorie/:id', component: CategorieComponent },  
   { path: 'categories', component: CategorieList},
-  
+
+  {
+    path: 'sorties',
+    loadComponent: () => import('./components/sortie/list-sortie-component/list-sortie-component').then(m => m.ListSortieComponent)
+  },
+  {
+    path: 'sortie',
+    loadComponent: () => import('./components/sortie/add-sortie-component/add-sortie-component').then(m => m.AddSortieComponent)
+  },
+  {
+    path: 'entrees',
+    loadComponent: () => import('./components/entree/list-entree-component/list-entree-component').then(m => m.ListEntreeComponent)
+  },
+  {
+    path: 'entree',
+    loadComponent: () => import('./components/entree/add-entree-component/add-entree-component').then(m => m.AddEntreeComponent)
+  }
 
 
 ];

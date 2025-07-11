@@ -35,14 +35,14 @@ export class FournisseurComponent implements OnInit{
 
   onSubmit(): void {
     if (this.fournisseurForm.valid) {
-          const fournisseur: FournisseurInterface  = this.fournisseurForm.value;
-          this.fournisseurService.create(fournisseur).then((fournisseur:FournisseurInterface)=>{
-            alert('Fournisseur créé avec succès !');
-            this.fournisseurForm.reset();
-          }).catch((err)=>{
-            alert('Erreur lors de la création !');
-              console.log(err);
-          });
+      const fournisseur: FournisseurInterface  = this.fournisseurForm.value;
+      this.fournisseurService.create(fournisseur).then((fournisseur:FournisseurInterface)=>{
+        alert('Fournisseur créé avec succès !');
+        this.fournisseurForm.reset();
+      }).catch((err)=>{
+        alert('Erreur lors de la création !');
+          console.log(err);
+      });
     }else{
       alert("Veuillez saisir les champs obligatoires !");
     }
