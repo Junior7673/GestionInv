@@ -31,7 +31,7 @@ export class CategorieComponent implements OnInit{
   onSubmit(): void {
     if (this.categorieForm.valid) {
       const categorie = this.categorieForm.value;
-      this.http.post('http://localhost:8080/categorie', categorie).subscribe({
+      this.http.post('http://localhost:8080/categorie/add', categorie).subscribe({
         next: () => {
           alert('Catégorie ajoutée avec succès !');
           this.categorieForm.reset();
@@ -42,5 +42,9 @@ export class CategorieComponent implements OnInit{
       });
   }
 }
+goBack(): void {
+  window.history.back();
+}
+
 
 }

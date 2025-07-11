@@ -42,7 +42,7 @@ export class CategorieService {
   }
 
   create({ categorie }: { categorie: CategorieInterface; }): Observable<CategorieInterface> {
-    return this.http.post<CategorieInterface>(`${this.apiUrl}/creeCat`, categorie);
+    return this.http.post<CategorieInterface>(`${this.apiUrl}/add`, categorie);
   }
 
   delete(id: number): Observable<void> {
