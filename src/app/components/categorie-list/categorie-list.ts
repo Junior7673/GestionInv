@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CategorieInterface } from '../../interfaces/categorie-interface';
 import { CategorieService } from '../../services/categorie-service';
-import { Router } from 'express';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categorie-list',
@@ -30,6 +30,7 @@ export class CategorieList implements OnInit{
   ngOnInit(): void {
     this.chargerCategories();
   }
+  
   chargerCategories(): void {
     this.categorieService.getAll().subscribe({
       next: data => this.categories = data,
@@ -37,7 +38,7 @@ export class CategorieList implements OnInit{
     });
   }
 
-   delete(id: number): void {
+   supprimerCategorie(id: number): void {
     if (confirm('Confirmer la suppression ?')) {
       this.categorieService.delete(id).subscribe({
         next: () => {
@@ -50,7 +51,7 @@ export class CategorieList implements OnInit{
   }
 
   modifierCategorie(id: number): void {
-    this.router.navigate(['/modifier-categorie', id]);
+    this.router.navigate(['categorie/' + id]);
   }
 
 }

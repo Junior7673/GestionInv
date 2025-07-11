@@ -37,12 +37,46 @@ export class CategorieService {
     });
   }
 
-  getById(id: number): Observable<CategorieInterface> {
-    return this.http.get<CategorieInterface>(`${this.apiUrl}/${id}`);
+  getById(id: number): Promise<CategorieInterface> {
+    return new Promise<CategorieInterface>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/${id}`).subscribe(
+        (res: any)=>{
+          resolve(<CategorieInterface>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      )
+    });
   }
 
-  create({ categorie }: { categorie: CategorieInterface; }): Observable<CategorieInterface> {
+  /*create({ categorie }: { categorie: CategorieInterface; }): Observable<CategorieInterface> {
     return this.http.post<CategorieInterface>(`${this.apiUrl}/add`, categorie);
+  }*/
+  create(categorie: CategorieInterface): Promise<CategorieInterface> {
+    return new Promise<CategorieInterface>((resolve, reject)=>{
+        this.http.post<CategorieInterface>(this.apiUrl+'/add', categorie).subscribe(
+          (res:any)=>{
+            resolve(<CategorieInterface> res);
+          },
+          (error:any)=>{
+            reject(error);
+          }
+        );
+      });
+     }
+
+  update(categorie: CategorieInterface): Promise<CategorieInterface>{
+    return new Promise<CategorieInterface>((resolve, reject)=>{
+      this.http.put<CategorieInterface>(`${this.apiUrl}`, categorie).subscribe(
+        (res:any)=>{
+          resolve(<CategorieInterface> res);
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
   }
 
   delete(id: number): Observable<void> {

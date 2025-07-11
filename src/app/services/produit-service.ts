@@ -11,8 +11,17 @@ export class ProduitService {
 
   constructor(private http: HttpClient) { }
 
-  creerProduit(data: ProduitInterface): Observable<ProduitInterface> {
-    return this.http.post<ProduitInterface>(this.apiUrl, data);
+  creerProduit(data: ProduitInterface): Promise<ProduitInterface> {
+    return new Promise<ProduitInterface>((resolve, reject)=>{
+      this.http.post<ProduitInterface>(this.apiUrl+'/add', data).subscribe(
+        (res:any)=>{
+          resolve(<ProduitInterface> res);
+        },
+        (error:any)=>{
+          reject(error);
+        }
+      );
+    });
   }
 
   getProduits(): Observable<ProduitInterface[]> {

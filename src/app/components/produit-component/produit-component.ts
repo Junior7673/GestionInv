@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProduitInterface } from '../../interfaces/produit-interface';
@@ -35,8 +34,7 @@ export class ProduitComponent implements OnInit{
   //ça c'est l'ancienne façon (avec un constructeur)
   constructor(
     private fb: FormBuilder,
-    private produitService: ProduitService,
-    private http: HttpClient){}
+    private produitService: ProduitService){}
 
    ngOnInit(): void {
     this.initProduitForm();
@@ -69,14 +67,12 @@ export class ProduitComponent implements OnInit{
   onSubmit(): void {
     if (this.produitForm.valid) {
       const produit: ProduitInterface  = this.produitForm.value;
-      this.produitService.creerProduit(produit).subscribe({
-        next: (res: any) => {
-          alert('Produit créé avec succès !');
-          this.produitForm.reset();
-        },
-        error: (err: { message: string; }) => {
-          alert('Erreur lors de la création : ' + err.message);
-        }
+      this.produitService.creerProduit(produit).then((produit:ProduitInterface)=>{
+        alert('Produit créé avec succès !');
+        this.produitForm.reset();
+      }).catch((err)=>{
+        alert('Erreur lors de la création !');
+          console.log(err);
       });
     }
   }
@@ -97,7 +93,7 @@ export class ProduitComponent implements OnInit{
   async searchFournisseur(){
     const term = this.produitForm.value['fournisseurTerm'];
     if(term !=""){
-      const liste = await this.fournisseurservice.searchbyName(term);
+      const liste = await this.fournisseurservice.searchByName(term);
       this.listeFournisseurs = liste;
     }
   }
@@ -108,7 +104,7 @@ export class ProduitComponent implements OnInit{
     const term = this.produitForm.value['categorieTerm'];
     if(term != ""){
       this.categorieService.searchbyName(term).then(
-        (liste: any)=>{
+        (liste: CategorieInterface[])=>{
           this.listeCategories = liste;
         }
       ).catch(
@@ -123,8 +119,8 @@ export class ProduitComponent implements OnInit{
 
   noAsyncSearchFournisseur(){
     const term = this.produitForm.value['fournisseurTerm'];
-    this.fournisseurservice.searchbyName(term).then(
-      (liste: any)=>{
+    this.fournisseurservice.searchByName(term).then(
+      (liste: FournisseurInterface[])=>{
         this.listeFournisseurs = liste;
       }
     ).catch(
@@ -143,10 +139,13 @@ export class ProduitComponent implements OnInit{
   }
 
   pickFournisseur(fourni: FournisseurInterface){
-    this.produitForm.patchValue({'fournisseurID': fourni.id});
-    this.produitForm.patchValue({'categorieTerm': fourni.nomfourni});
+    this.produitForm.patchValue({'fournisseurId': fourni.id});
+    this.produitForm.patchValue({'fournisseurTerm': fourni.nomfourni});
     //et on efface la liste
     this.listeFournisseurs = [];
   }
+  goBack(): void {
+  window.history.back();
+}
 
 }

@@ -4,6 +4,9 @@ import { CategorieComponent } from './components/categorie-component/categorie-c
 import { FournisseurComponent } from './components/fournisseur-component/fournisseur-component';
 import { DashboardComponent } from './components/dashboard-component/dashboard-component';
 import { CategorieList } from './components/categorie-list/categorie-list';
+import { CategorieUpdate } from './components/categorie-update/categorie-update';
+import { FournisseurComponentList } from './components/fournisseur-component-list/fournisseur-component-list';
+import { FournisseurComponentUpdate } from './components/fournisseur-component-update/fournisseur-component-update';
 
 export const routes: Routes = [
   { 
@@ -13,11 +16,19 @@ export const routes: Routes = [
     loadComponent: () => import('./components/dashboard-component/dashboard-component').then(m => m.DashboardComponent)
   },
   { path: 'produit', component: ProduitComponent },
+  //Fournisseur
   { path: 'fournisseur', component: FournisseurComponent },
-  { path: 'categorie', component: CategorieComponent },
-  {path: 'categories', component: CategorieList},
-  { path: 'modifier-categorie/:id', component: CategorieComponent },  // réutilise le formulaire
+  { path: 'fournisseurs', component: FournisseurComponentList},
+  { path: 'modifier-fournisseur/:id', component: FournisseurComponent},
+  { path: 'fournisseur/id', component: FournisseurComponentUpdate},
+  { path: 'fournisseur/:id', component: FournisseurComponent }, // ou ModifierFournisseurComponent
 
+  //Categorie
+  { path: 'categorie', component: CategorieComponent },
+  { path: 'categorie/:id', component: CategorieUpdate },
+  { path: 'modifier-categorie/:id', component: CategorieComponent },  
+  { path: 'categories', component: CategorieList},
+  
 
 
 ];

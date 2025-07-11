@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
+import { FournisseurService } from '../../services/fournisseur-service';
 
 @Component({
   selector: 'app-fournisseur-component',
@@ -19,7 +21,8 @@ export class FournisseurComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private fournisseurService: FournisseurService
   ) {}
 
   ngOnInit(): void {
@@ -33,16 +36,18 @@ export class FournisseurComponent implements OnInit{
 
   onSubmit(): void {
     if (this.fournisseurForm.valid) {
-      const fournisseur = this.fournisseurForm.value;
-      this.http.post('http://localhost:8080/fournisseur', fournisseur).subscribe({
-        next: () => {
-          alert('Fournisseur ajouté avec succès !');
-          this.fournisseurForm.reset();
-        },
-        error: err => {
-          alert('Erreur : ' + err.message);
+          const fournisseur: FournisseurInterface  = this.fournisseurForm.value;
+          this.fournisseurService.create(fournisseur).then((fournisseur:FournisseurInterface)=>{
+            alert('Fournisseur créé avec succès !');
+            this.fournisseurForm.reset();
+          }).catch((err)=>{
+            alert('Erreur lors de la création !');
+              console.log(err);
+          });
         }
-      });
-    }
-  }
+      }
+      
+  goBack(): void {
+  window.history.back();
+}
 }

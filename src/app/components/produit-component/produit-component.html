@@ -1,5 +1,8 @@
 <div class="container mt-5">
   <h2 class="text-center mb-4">Ajouter un Produit</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
 
   <form [formGroup]="produitForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm">
     <div class="mb-3">
@@ -37,7 +40,7 @@
 
     <div class="mb-3">
       <label class="form-label">Fournisseur</label>
-      <select class="form-select" formControlName="fournisseurId">
+      <select class="form-select" formControlName="fournisseurId" style="display:none;">
         <option value="" disabled selected>Choisissez un fournisseur</option>
         <option *ngFor="let f of fournisseur" [value]="f.id">{{ f.nom }}</option>
       </select>
@@ -46,8 +49,8 @@
    <input formControlName="fournisseurTerm" type="text" class="form-control" placeholder="Entrer (oui avec r, pas z) le fournisseur" (keyup)="noAsyncSearchFournisseur()">
       @if(listeFournisseurs.length > 0){
         <div class="list-group">
-          @for(cat of listeFournisseurs; track fourni.id){
-            <div class="list-group-item" (click)="pickCategory(fourni)">{{fourni.nomfourni}}</div>
+          @for(fourni of listeFournisseurs; track fourni.id){
+            <div class="list-group-item" (click)="pickFournisseur(fourni)">{{fourni.nomfourni}}</div>
           }
         </div>
       }

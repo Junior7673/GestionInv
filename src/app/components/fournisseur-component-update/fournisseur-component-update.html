@@ -4,7 +4,7 @@
     <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
   </div>
 
-  <form [formGroup]="fournisseurForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm">
+  <form [formGroup]="fournisseurForm" (ngSubmit)="update()" class="card p-4 shadow-sm">
     <div class="mb-3">
       <label class="form-label">Nom</label>
       <input type="text" formControlName="nomfourni" class="form-control" placeholder="Entrez le nom du fournisseur">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="d-grid">
-      <button type="submit" class="btn btn-primary">Créer le fournisseur</button>
+      <button type="submit" class="btn btn-primary">Modifier le fournisseur</button>
     </div>
   </form>
 </div>
