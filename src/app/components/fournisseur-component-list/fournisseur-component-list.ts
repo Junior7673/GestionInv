@@ -53,5 +53,4 @@ export class FournisseurComponentList implements OnInit {
     this.router.navigate(['fournisseur/' + id]);
   }
 
-
 }

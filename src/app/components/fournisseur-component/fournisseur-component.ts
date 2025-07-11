@@ -29,8 +29,7 @@ export class FournisseurComponent implements OnInit{
     this.fournisseurForm = this.fb.group({
       nomfourni: ['', Validators.required],
       telephonefourni: ['', Validators.required],
-      adressefourni: ['', [Validators.required, Validators.email]],
-
+      adressefourni: ['', [Validators.required]]
     });
   }
 
@@ -44,8 +43,10 @@ export class FournisseurComponent implements OnInit{
             alert('Erreur lors de la création !');
               console.log(err);
           });
-        }
-      }
+    }else{
+      alert("Veuillez saisir les champs obligatoires !");
+    }
+  }
       
   goBack(): void {
   window.history.back();
