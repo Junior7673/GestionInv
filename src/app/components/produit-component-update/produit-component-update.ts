@@ -32,9 +32,10 @@ export class ProduitComponentUpdate implements OnInit{
   produitForm: FormGroup = new FormGroup({});
   
   ngOnInit(): void {
-    this.initProduitForm();
     this.urlId = this.route.snapshot.paramMap.get('id');
-    this.initProduit();  }
+    this.initProduit();  
+    this.initProduitForm();
+  }
 
   initProduit(){
       const id = Number.parseInt(this.urlId);
