@@ -1,5 +1,8 @@
 <div class="container mt-5">
   <h2 class="text-center mb-4">Liste des Entrées</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
 
   <table class="table table-bordered shadow-sm">
     <thead class="table-light">
@@ -15,7 +18,7 @@
         @for(entree of entrees; track entree.id){
             <tr>
                 <td>{{ entree.id }}</td>
-                <td>{{ entree.produitId }}</td>
+                <td>{{ entree.nomprod }}</td>
                 <td>{{ entree.stock }}</td>
                 <td>{{ entree.date }}</td>
                 <td>

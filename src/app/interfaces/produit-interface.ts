@@ -6,4 +6,7 @@ export interface ProduitInterface {
   seuilAlerteprod: number;
   categorieId: string;
   fournisseurId: string;
+  nomcat?: string; 
+  nomfourni?: string;
+
 }

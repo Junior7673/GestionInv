@@ -7,6 +7,7 @@ import { CategorieService } from '../../services/categorie-service';
 import { CategorieInterface } from '../../interfaces/categorie-interface';
 import { FournisseurService } from '../../services/fournisseur-service';
 import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-produit-component',
@@ -27,14 +28,14 @@ export class ProduitComponent implements OnInit{
   listeFournisseurs : FournisseurInterface[]=[];
   //
 
-  //ça c'est la nouvelle façon d'implémenter un service en angular
+  //Injecter un service en angular
   categorieService = inject(CategorieService);
   fournisseurservice = inject(FournisseurService);
 
-  //ça c'est l'ancienne façon (avec un constructeur)
   constructor(
     private fb: FormBuilder,
-    private produitService: ProduitService){}
+    private produitService: ProduitService,
+    private http: HttpClient){}
 
    ngOnInit(): void {
     this.initProduitForm();

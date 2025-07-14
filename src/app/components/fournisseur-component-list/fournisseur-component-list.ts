@@ -52,5 +52,9 @@ export class FournisseurComponentList implements OnInit {
   modifierFournisseur(id: number): void {
     this.router.navigate(['fournisseur/' + id]);
   }
+   
+goBack(): void {
+  window.history.back();
+}
 
 }

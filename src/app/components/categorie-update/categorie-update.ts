@@ -15,7 +15,7 @@ export class CategorieUpdate implements OnInit{
   categorieService = inject(CategorieService);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  //
+  
   urlId : string = '';
   categorie: CategorieInterface = {
     id:0,
@@ -59,7 +59,8 @@ export class CategorieUpdate implements OnInit{
     ).catch((error)=>{alert("Une erreur est survenue !");console.log(error);})
   }
 
-  goBack(){
-    this.router.navigate(['categories']);
-  }
+  
+goBack(): void {
+  window.history.back();
+}
 }

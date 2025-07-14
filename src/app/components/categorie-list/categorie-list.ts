@@ -53,5 +53,9 @@ export class CategorieList implements OnInit{
   modifierCategorie(id: number): void {
     this.router.navigate(['categorie/' + id]);
   }
+  
+goBack(): void {
+  window.history.back();
+}
 
 }

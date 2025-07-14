@@ -1,0 +1,44 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Modifier une Produit</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
+
+  <form [formGroup]="produitForm" (ngSubmit)="update()" class="card p-4 shadow-sm">
+    <div class="mb-3">
+      <label class="form-label">Nom du produit</label>
+      <input type="text" formControlName="nomprod" class="form-control" placeholder="Entrez le nom du produit">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Prix</label>
+      <input type="number" formControlName="prixprod" class="form-control" placeholder="Entrez le prix">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Stock</label>
+      <input type="number" formControlName="stockprod" class="form-control" placeholder="Entrez le stock disponible">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Seuil d'alerte</label>
+      <input type="number" formControlName="seuilAlerteprod" class="form-control" placeholder="Entrez le seuil d'alerte">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Categorie</label>
+      <input type="number" formControlName="nomcat" class="form-control" placeholder="Entrez le nom de la categorie">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fournisseur</label>
+      <input type="number" formControlName="nomfourni" class="form-control" placeholder="Entrez le nom du fournisseur">
+    </div>
+
+
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Modifier le produit</button>
+    </div>
+  </form>
+</div>

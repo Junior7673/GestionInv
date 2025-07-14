@@ -3,4 +3,5 @@ export interface SortieInterface {
     stock: number;
     date: Date;
     produitId: number;
+    nomprod?: string;
 }

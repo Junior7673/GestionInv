@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Liste des Produits</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
+
+  <table class="table table-bordered shadow-sm">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Prix_Produit</th>
+        <th>Seuil_Alerte</th>
+        <th>Stock_Produit</th>
+        <th>Categorie_Produit</th>
+        <th>Fournisseur_Produit</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of produits; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ prod.nomprod }}</td>
+        <td>{{ prod.prixprod }}</td>
+        <td>{{ prod.seuilAlerteprod }}</td>
+        <td>{{ prod.stockprod }}</td>
+        <td>{{ prod.nomcat }}</td>
+        <td>{{ prod.nomfourni }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="modifierProduit(prod.id)">Modifier</button>
+          <button class="btn btn-sm btn-danger" (click)="supprimerProduit(prod.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="produits.length === 0" class="text-center text-muted">
+    Aucun produit trouvé.
+  </div>
+</div>

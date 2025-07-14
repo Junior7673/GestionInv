@@ -1,5 +1,8 @@
 <div class="container mt-5">
   <h2 class="text-center mb-4">Liste des Sorties</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
 
   <table class="table table-bordered shadow-sm">
     <thead class="table-light">
@@ -15,7 +18,7 @@
         @for(sortie of sorties; track sortie.id){
             <tr>
                 <td>{{ sortie.id }}</td>
-                <td>{{ sortie.produitId }}</td>
+                <td>{{ sortie.nomprod }}</td>
                 <td>{{ sortie.stock }}</td>
                 <td>{{ sortie.date }}</td>
                 <td>

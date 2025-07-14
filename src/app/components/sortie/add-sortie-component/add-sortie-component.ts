@@ -95,9 +95,9 @@ export class AddSortieComponent implements OnInit{
     this.sortieForm.patchValue({produitId: prod.id});
     this.produits = [];
   }
-
-  goBack(){
-    this.router.navigate(['sorties']);
-  }
+ 
+goBack(): void {
+  window.history.back();
+}
 
 }

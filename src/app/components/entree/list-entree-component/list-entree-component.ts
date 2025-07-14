@@ -2,15 +2,18 @@ import { Component } from '@angular/core';
 import { EntreeInterface } from '../../../interfaces/entree.interface';
 import { EntreeService } from '../../../services/entree.service';
 import { Router } from '@angular/router';
+import { ProduitInterface } from '../../../interfaces/produit-interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-entree-component',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './list-entree-component.html',
   styleUrl: './list-entree-component.css'
 })
 export class ListEntreeComponent {
   entrees: EntreeInterface[] = [];
+  produit: ProduitInterface[] = [];
 
   constructor(
     private entreeService: EntreeService,
@@ -22,10 +25,10 @@ export class ListEntreeComponent {
   }
 
   chargerEntree(): void {
-    this.entreeService.getAll().subscribe({
-      next: data => this.entrees = data,
-      error: err => alert('Erreur lors du chargement : ' + err.message)
-    });
+    this.entreeService.getAllWithNomProduit()
+    .then(data => this.entrees = data)
+    .catch(err => console.error('Erreur de chargement des entrées :', err));
+
   }
 
   supp(id: number): void {
@@ -39,4 +42,8 @@ export class ListEntreeComponent {
       });
     }
   }
+  
+goBack(): void {
+  window.history.back();
+}
 }

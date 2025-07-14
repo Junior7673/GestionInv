@@ -2,17 +2,49 @@ import { Observable } from "rxjs";
 import { EntreeInterface } from "../interfaces/entree.interface";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { ProduitService } from "./produit-service";
 
 @Injectable()
 export class EntreeService {
 
     apiUrl = 'http://localhost:8080/entree';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+        private produitService: ProduitService
+    ) { }
+    
 
     getAll(): Observable<EntreeInterface[]> {
         return this.http.get<EntreeInterface[]>(this.apiUrl);
     }
+
+    getAllWithNomProduit(): Promise<EntreeInterface[]> {
+    return new Promise((resolve, reject) => {
+      this.produitService.getAll().subscribe({
+        next: (produits) => {
+          const mapProduit = new Map<number, string>();
+          produits.forEach(p => {
+            if (p.id != null) {
+              mapProduit.set(p.id, p.nomprod);
+            }
+          });
+
+          this.getAll().subscribe({
+            next: (entrees) => {
+              const entreesAvecNom = entrees.map(e => ({
+                ...e,
+                nomprod: mapProduit.get(e.produitId) ?? 'Inconnu'
+              }));
+              resolve(entreesAvecNom);
+            },
+            error: err => reject(err)
+          });
+        },
+        error: err => reject(err)
+      });
+    });
+  }
+
 
 
     getById(id: number): Promise<EntreeInterface> {

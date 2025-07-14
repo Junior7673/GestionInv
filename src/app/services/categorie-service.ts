@@ -8,6 +8,9 @@ import { CategorieInterface } from '../interfaces/categorie-interface';
 })
 
 export class CategorieService {
+  static getById(categorieId: number) {
+    throw new Error('Method not implemented.');
+  }
     private apiUrl = 'http://localhost:8080/categorie';
 
 
@@ -16,7 +19,7 @@ export class CategorieService {
     return this.http.get<CategorieInterface[]>(this.apiUrl);
   }
 
-  //donc tu vois il faut ajouter une méthode pour rechercher une catégorieh
+  //On ajoute une méthode pour rechercher une catégorieh
   //en fonction du nom de la catégorie ou peut importe comment tu l'as appeléh
   searchbyName(term: string){
     return new Promise<CategorieInterface[]>((resolve, reject) => {
@@ -82,4 +85,5 @@ export class CategorieService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  
 }

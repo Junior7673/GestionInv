@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CategorieService } from '../../services/categorie-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
 import { FournisseurService } from '../../services/fournisseur-service';
@@ -44,7 +43,7 @@ export class FournisseurComponentUpdate implements OnInit{
     initFournisseurForm(){
       this.fournisseurForm = this.formBuilder.group({
         nomfourni: this.fournisseur.nomfourni,
-        telephonfournir: this.fournisseur.telephonefourni,
+        telephonefourni: this.fournisseur.telephonefourni,
         adressefourni: this.fournisseur.adressefourni,
 
       });
@@ -62,9 +61,9 @@ export class FournisseurComponentUpdate implements OnInit{
         ).catch((error)=>{alert("Une erreur est survenue !");console.log(error);})
       }
     
-      goBack(){
-        this.router.navigate(['fournisseurs']);
-      }
+      goBack(): void {
+  window.history.back();
+}
   
 
 }

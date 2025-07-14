@@ -7,6 +7,8 @@ import { CategorieList } from './components/categorie-list/categorie-list';
 import { CategorieUpdate } from './components/categorie-update/categorie-update';
 import { FournisseurComponentList } from './components/fournisseur-component-list/fournisseur-component-list';
 import { FournisseurComponentUpdate } from './components/fournisseur-component-update/fournisseur-component-update';
+import { ProduitComponentList } from './components/produit-component-list/produit-component-list';
+import { ProduitComponentUpdate } from './components/produit-component-update/produit-component-update';
 
 export const routes: Routes = [
   { 
@@ -16,12 +18,15 @@ export const routes: Routes = [
     loadComponent: () => import('./components/dashboard-component/dashboard-component').then(m => m.DashboardComponent)
   },
   { path: 'produit', component: ProduitComponent },
+  { path: 'produits', component: ProduitComponentList},
+  { path: 'produit/ajouter', component: ProduitComponentUpdate },     
+  { path: 'produit/:id', component: ProduitComponentUpdate },    
+  
   //Fournisseur
   { path: 'fournisseur', component: FournisseurComponent },
   { path: 'fournisseurs', component: FournisseurComponentList},
-  { path: 'modifier-fournisseur/:id', component: FournisseurComponent},
-  { path: 'fournisseur/id', component: FournisseurComponentUpdate},
-  { path: 'fournisseur/:id', component: FournisseurComponent }, // ou ModifierFournisseurComponent
+  { path: 'fournisseur/ajouter', component: FournisseurComponentUpdate },     
+  { path: 'fournisseur/:id', component: FournisseurComponentUpdate },    
 
   //Categorie
   { path: 'categorie', component: CategorieComponent },

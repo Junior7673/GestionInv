@@ -1,6 +1,61 @@
+.container {
+  background-color: #f5faff; /* bleu très clair */
+  padding: 30px;
+  border-radius: 15px;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #003366;
+}
+
 .card {
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-text {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.btn {
+  font-size: 2rem;
+  padding: 10px 18px;
+  font-weight: 500;
   border-radius: 10px;
 }
-.card-title {
-  font-weight: 600;
+
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-warning {
+  border-width: 2px;
+}
+
+.btn + .btn {
+  margin-left: 10px;
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.3rem;
+  }
+  .btn {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+  }
 }

@@ -96,7 +96,8 @@ export class AddEntreeComponent implements OnInit{
     this.produits = [];
   }
 
-  goBack(){
-    this.router.navigate(['entrees']);
-  }
+ 
+goBack(): void {
+  window.history.back();
+}
 }

@@ -1,0 +1,33 @@
+.container {
+  background-color: #f5faff; /* Bleu très clair */
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.custom-table {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.custom-table th,
+.custom-table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.custom-table th {
+  background-color: #cfe2ff;
+  color: #084298;
+  font-weight: bold;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #eaf3ff;
+  transition: background-color 0.3s;
+}
+
+.btn {
+  border-radius: 8px;
+}
