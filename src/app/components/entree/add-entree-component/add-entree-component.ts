@@ -44,22 +44,10 @@ export class AddEntreeComponent implements OnInit{
   }
 
   onSubmit(){
-    if (this.entreeForm.valid) {
+    if(this.entreeForm.valid) {
 
       if(this.produitSelected.id == 0){
         alert('Veuillez choisir un produit !');
-        return;
-      }
-
-      if(this.entreeForm.value['stock'] > this.produitSelected.stockprod){
-        alert('Stock insuffisant !');
-        return;
-      }
-
-      const stockrestant = this.produitSelected.stockprod - this.entreeForm.value['stock'];
-
-      if(stockrestant < this.produitSelected.seuilAlerteprod){
-        alert('Seuil de stock atteint !');
         return;
       }
 
