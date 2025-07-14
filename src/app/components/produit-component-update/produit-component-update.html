@@ -27,12 +27,28 @@
 
     <div class="mb-3">
       <label class="form-label">Categorie</label>
-      <input type="number" formControlName="nomcat" class="form-control" placeholder="Entrez le nom de la categorie">
+      <input type="number" formControlName="categorieId" style="display:none">
+      <input type="text" formControlName="nomcat" class="form-control" placeholder="Entrez le nom de la categorie" (keyup)="searchCategorie()">
+      @if(categories.length > 0){
+        <div class="list-group">
+          @for(categorie of categories; track categorie.id){
+            <div class="list-group-item" (click)="pickCategorie(categorie.id)">{{categorie.nomcat}}</div>
+          }
+        </div>
+      }
     </div>
 
     <div class="mb-3">
       <label class="form-label">Fournisseur</label>
-      <input type="number" formControlName="nomfourni" class="form-control" placeholder="Entrez le nom du fournisseur">
+      <input type="number" formControlName="founisseurId" style="display:none">
+      <input type="text" formControlName="nomfourni" class="form-control" placeholder="Entrez le nom du fournisseur" (keyup)="searchFournisseur()">
+      @if(founisseurs.length > 0){
+        <div class="list-group">
+          @for(fournisseur of fournisseurs; track founisseur.id){
+            <div class="list-group-item" (click)="pickFournisseur(fournisseur.id)">{{fournisseur.nomfourni}}</div>
+          }
+        </div>
+      }
     </div>
 
 

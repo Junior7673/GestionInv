@@ -66,7 +66,7 @@ constructor(private http: HttpClient) { }
 
   update(fournisseur: FournisseurInterface): Promise<FournisseurInterface>{
       return new Promise<FournisseurInterface>((resolve, reject)=>{
-        this.http.put<FournisseurInterface>(`${this.apiUrl}`, fournisseur).subscribe(
+        this.http.put<FournisseurInterface>(`${this.apiUrl}/`+fournisseur.id, fournisseur).subscribe(
           (res:any)=>{
             resolve(<FournisseurInterface> res);
           },
