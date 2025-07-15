@@ -40,9 +40,9 @@
 
     <div class="mb-3">
       <label class="form-label">Fournisseur</label>
-      <input type="number" formControlName="founisseurId" style="display:none">
+      <input type="number" formControlName="fournisseurId" style="display:none">
       <input type="text" formControlName="nomfourni" class="form-control" placeholder="Entrez le nom du fournisseur" (keyup)="searchFournisseur()">
-      @if(founisseurs.length > 0){
+      @if(fournisseurs.length > 0){
         <div class="list-group">
           @for(fournisseur of fournisseurs; track founisseur.id){
             <div class="list-group-item" (click)="pickFournisseur(fournisseur.id)">{{fournisseur.nomfourni}}</div>
@@ -50,8 +50,6 @@
         </div>
       }
     </div>
-
-
 
     <div class="d-grid">
       <button type="submit" class="btn btn-primary">Modifier le produit</button>

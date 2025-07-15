@@ -23,27 +23,18 @@ export class ProduitComponentUpdate implements OnInit{
   router = inject(Router);
 
   urlId : string = '';
-  categorie : CategorieInterface = {
-    id:0,
-    nomcat: '',
-    descriptioncat: ''
-  };
   categories : CategorieInterface[] = [];
-  fournisseur : FournisseurInterface = {
-    id: 0,
-    nomfourni: '',
-    telephonefourni: '',
-    adressefourni: ''
-  };
+  i_nomcat : string = '';
   fournisseurs : FournisseurInterface[] = [];
+  i_nomfourni : string = '';
   produit: ProduitInterface = {
     id:0,
     nomprod:"",
     prixprod:0,
     stockprod:0,
     seuilAlerteprod:0,
-    categorieId:"",
-    fournisseurId:"",
+    categorieId:0,
+    fournisseurId:0,
     nomcat:"",
     nomfourni:""
   };
@@ -51,15 +42,22 @@ export class ProduitComponentUpdate implements OnInit{
   produitForm: FormGroup = new FormGroup({});
   
   ngOnInit(): void {
+    this.initProduitForm();
     this.urlId = this.route.snapshot.paramMap.get('id');
     this.initProduit();  
-    this.initProduitForm();
   }
 
   initProduit(){
     const id = Number.parseInt(this.urlId);
-    this.produitService.getById(id).then((prod:ProduitInterface)=>{
+    this.produitService.getById(id).then(async (prod:ProduitInterface)=>{
       this.produit = prod;
+      console.log(this.produit);
+      //
+      const categorie = await this.categorieService.getById(this.produit.categorieId);
+      this.i_nomcat = categorie.nomcat;
+      const fournisseur = await this.fournisseurService.getById(this.produit.fournisseurId);
+      this.i_nomfourni = fournisseur.nomfourni;
+      //
       this.initProduitForm();
     }).catch((error)=>{
       console.log(error);
@@ -72,8 +70,8 @@ export class ProduitComponentUpdate implements OnInit{
       prixprod: this.produit.prixprod,
       stockprod: this.produit.stockprod,
       seuilAlerteprod: this.produit.seuilAlerteprod,
-      nomcat: this.produit.nomcat,
-      nomfourni: this.produit.nomfourni,
+      nomcat: this.i_nomcat,
+      nomfourni: this.i_nomfourni,
       categorieId: this.produit.categorieId,
       fournisseurId: this.produit.fournisseurId,
     });
@@ -83,11 +81,40 @@ export class ProduitComponentUpdate implements OnInit{
     const term = this.produitForm.value['nomcat'];
     if(term != ''){
       this.categorieService.searchbyName(term).then((cats)=>{
-
-      }).catch((error)=>)
+        this.categories = cats;
+      }).catch((error)=>{
+        console.log(error);
+      });
     }else{
       this.produitForm.patchValue({categorieId: 0});
     }
+  }
+
+  pickCategorie(categorie: CategorieInterface){
+    this.produitForm.patchValue({'categorieId': categorie.id});
+    this.produitForm.patchValue({'nomcat': categorie.nomcat});
+    //et on efface la liste
+    this.categories = [];
+  }
+
+  searchFournisseur(){
+    const term = this.produitForm.value['nomfourni'];
+    if(term != ''){
+      this.fournisseurService.searchByName(term).then((fournis)=>{
+        this.fournisseurs = fournis;
+      }).catch((error)=>{
+        console.log(error);
+      });
+    }else{
+      this.produitForm.patchValue({fournisseurId: 0});
+    }
+  }
+
+  pickFournisseur(fournisseur: FournisseurInterface){
+    this.produitForm.patchValue({'fournisseurId': fournisseur.id});
+    this.produitForm.patchValue({'nomfourni': fournisseur.nomfourni});
+    //et on efface la liste
+    this.fournisseurs = [];
   }
 
   update(){
@@ -97,7 +124,7 @@ export class ProduitComponentUpdate implements OnInit{
       (prod: ProduitInterface)=>{
         alert("Produit Modifié avec succès !");
         this.produit = prod;
-        this.initProduitForm();
+        this.initProduit();
       }
     ).catch((error)=>{alert("Une erreur est survenue !");console.log(error);})
   }

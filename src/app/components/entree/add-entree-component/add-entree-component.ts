@@ -26,8 +26,8 @@ export class AddEntreeComponent implements OnInit{
     prixprod: 0,
     stockprod: 0,
     seuilAlerteprod: 0,
-    categorieId: '',
-    fournisseurId: ''
+    categorieId: 0,
+    fournisseurId: 0
   };
 
   ngOnInit(): void {

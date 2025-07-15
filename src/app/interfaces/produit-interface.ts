@@ -4,8 +4,8 @@ export interface ProduitInterface {
   prixprod: number;
   stockprod: number;
   seuilAlerteprod: number;
-  categorieId: string;
-  fournisseurId: string;
+  categorieId: number;
+  fournisseurId: number;
   nomcat?: string; 
   nomfourni?: string;
 
