@@ -1,0 +1,37 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <h3 class="text-center mb-4">Inscription</h3>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Nom d'utilisateur</label>
+      <input type="text" class="form-control" formControlName="nomUtilisateur" />
+
+       <div *ngIf="registerForm.get('nomUtilisateur')?.hasError('specialChars') && registerForm.get('nomUtilisateur')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mot de passe</label>
+      <input type="password" class="form-control" formControlName="motDePasse" />
+
+    <div *ngIf="registerForm.get('motDePasse')?.hasError('weakPassword') && registerForm.get('motDePasse')?.touched">
+      <p class="error-message">
+           Mot de passe trop faible. Il doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.
+      </p>
+    </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Rôle</label>
+      <select class="form-select" formControlName="role">
+        <option value="UTILISATEUR">Utilisateur</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+    <button class="btn btn-success w-100" type="submit">S'inscrire</button>
+  </form>
+</div>

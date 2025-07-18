@@ -78,3 +78,17 @@ h2 {
 .list-group-item:hover {
   background-color: #d9ecff;
 }
+
+.search-input {
+  max-width: 300px;
+  border-radius: 12px;
+  border: 1px solid #b8daff;
+  padding: 10px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

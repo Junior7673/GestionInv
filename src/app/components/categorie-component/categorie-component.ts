@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { CategorieService } from '../../services/categorie-service';
 import { CategorieInterface } from '../../interfaces/categorie-interface';
+import { noSpecialCharactersValidator } from '../../MesRestriction/noSpecialCharactersValidator';
 
 @Component({
   selector: 'app-categorie-component',
@@ -27,8 +28,8 @@ export class CategorieComponent implements OnInit{
 
   ngOnInit(): void {
     this.categorieForm = this.fb.group({
-      nomcat: ['', Validators.required],
-      descriptioncat: ['', Validators.required]
+      nomcat: ['', Validators.required, noSpecialCharactersValidator],
+      descriptioncat: ['', Validators.required, noSpecialCharactersValidator]
     });
   }
   onSubmit(): void {

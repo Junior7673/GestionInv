@@ -20,6 +20,7 @@ import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
 })
 export class ProduitComponentList implements OnInit{
   produitForm!: FormGroup;
+  term: string = '';
 
   produits: ProduitInterface[] = [];
   categorie: CategorieInterface[] = [];
@@ -61,5 +62,20 @@ chargerProduits(): void {
   goBack(): void {
   window.history.back();
 }
+//Pour la recherche
+get produitsFiltres(): ProduitInterface[] {
+  if (!this.term.trim()) {
+    return this.produits;
+  }
+
+  const lowerTerm = this.term.toLowerCase();
+
+  return this.produits.filter(prod =>
+    prod.nomprod?.toLowerCase().includes(lowerTerm) ||
+    prod.nomcat?.toLowerCase().includes(lowerTerm) ||
+    prod.nomfourni?.toLowerCase().includes(lowerTerm)
+  );
+}
+
 
 }

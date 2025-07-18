@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
 import { FournisseurService } from '../../services/fournisseur-service';
+import { noSpecialCharactersValidator } from '../../MesRestriction/noSpecialCharactersValidator';
+import { flexibleEmailValidator } from '../../MesRestriction/flexibleEmailValidator';
 
 @Component({
   selector: 'app-fournisseur-component',
@@ -27,9 +29,9 @@ export class FournisseurComponent implements OnInit{
 
   ngOnInit(): void {
     this.fournisseurForm = this.fb.group({
-      nomfourni: ['', Validators.required],
-      telephonefourni: ['', Validators.required],
-      adressefourni: ['', [Validators.required]]
+      nomfourni: ['', Validators.required, noSpecialCharactersValidator],
+      telephonefourni: ['', Validators.required, noSpecialCharactersValidator],
+      adressefourni: ['', [Validators.required, flexibleEmailValidator]]
     });
   }
 

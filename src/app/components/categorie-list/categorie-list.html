@@ -2,6 +2,11 @@
   <h2 class="text-center mb-4">Liste des Catégories</h2>
   <div class="mb-3">
     <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+    <input type="text"
+         [(ngModel)]="termeRecherche"
+         placeholder="🔍 Rechercher par produit, stock, date..."
+         class="form-control search-input"
+    />
   </div>
 
   <table class="table table-bordered shadow-sm">
@@ -15,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cat of categories; let i = index">
+      <tr *ngFor="let cat of categories | categorieFilter: termeRecherche; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{ cat.nomcat }}</td>
         <td>{{ cat.descriptioncat }}</td>

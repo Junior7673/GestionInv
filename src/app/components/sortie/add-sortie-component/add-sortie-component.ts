@@ -5,6 +5,8 @@ import { SortieInterface } from '../../../interfaces/sortie.interface';
 import { ProduitInterface } from '../../../interfaces/produit-interface';
 import { ProduitService } from '../../../services/produit-service';
 import { Router } from '@angular/router';
+import { noSpecialCharactersValidator } from '../../../MesRestriction/noSpecialCharactersValidator';
+import { dateValidator } from '../../../MesRestriction/dateValidator';
 
 @Component({
   selector: 'app-add-sortie-component',
@@ -36,10 +38,10 @@ export class AddSortieComponent implements OnInit{
 
   initSortieForm(){
     this.sortieForm = this.fb.group({
-      produitId: ['', Validators.required],
+      produitId: ['',  Validators.required, noSpecialCharactersValidator],
       produitText: [''],
-      stock: [0, Validators.required],
-      date: ['', Validators.required],
+      stock: [0,  Validators.required, noSpecialCharactersValidator],
+      date: ['', Validators.required, dateValidator],
     });
   }
 

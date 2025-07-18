@@ -8,11 +8,19 @@
     <div class="mb-3">
       <label class="form-label">Nom de la catégorie</label>
       <input type="text" formControlName="nomcat" class="form-control" placeholder="Entrez le nom de la catégorie">
+
+      <div *ngIf="categorieForm.get('nomcat')?.hasError('specialChars') && categorieForm.get('nomcat')?.touched">
+      <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+    </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Description</label>
       <textarea formControlName="descriptioncat" class="form-control" placeholder="Entrez la description"></textarea>
+
+      <div *ngIf="categorieForm.get('descriptioncat')?.hasError('specialChars') && categorieForm.get('descriptioncat')?.touched">
+      <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+    </div>
     </div>
 
     <div class="d-grid">

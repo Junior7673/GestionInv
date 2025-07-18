@@ -73,6 +73,19 @@ export class EntreeService {
         });
     }
 
+    update(entree: EntreeInterface): Promise<EntreeInterface>{
+          return new Promise<EntreeInterface>((resolve, reject)=>{
+            this.http.put<EntreeInterface>(`${this.apiUrl}`, entree).subscribe(
+              (res:any)=>{
+                resolve(<EntreeInterface> res);
+              },
+              (error)=>{
+                reject(error);
+              }
+            );
+          });
+        }
+
     delete(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }

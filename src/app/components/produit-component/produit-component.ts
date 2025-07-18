@@ -8,6 +8,7 @@ import { CategorieInterface } from '../../interfaces/categorie-interface';
 import { FournisseurService } from '../../services/fournisseur-service';
 import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
 import { HttpClient } from '@angular/common/http';
+import { noSpecialCharactersValidator } from '../../MesRestriction/noSpecialCharactersValidator';
 
 @Component({
   selector: 'app-produit-component',
@@ -54,13 +55,13 @@ export class ProduitComponent implements OnInit{
 
   initProduitForm(){
     this.produitForm = this.fb.group({
-      nomprod: ['', Validators.required],
-      prixprod: [0, Validators.required],
-      stockprod: [0, Validators.required],
-      seuilAlerteprod: [0, Validators.required],
-      categorieId: ['', Validators.required],
+      nomprod: ['', Validators.required, noSpecialCharactersValidator],
+      prixprod: [0, Validators.required, noSpecialCharactersValidator],
+      stockprod: [0, Validators.required, noSpecialCharactersValidator],
+      seuilAlerteprod: [0, Validators.required, noSpecialCharactersValidator],
+      categorieId: ['', Validators.required, noSpecialCharactersValidator],
       categorieTerm: [''], 
-      fournisseurId: ['', Validators.required],
+      fournisseurId: ['', Validators.required, noSpecialCharactersValidator],
       fournisseurTerm: ['']
     });
   }

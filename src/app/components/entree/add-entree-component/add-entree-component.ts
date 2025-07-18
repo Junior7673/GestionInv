@@ -5,6 +5,8 @@ import { ProduitService } from '../../../services/produit-service';
 import { Router } from '@angular/router';
 import { ProduitInterface } from '../../../interfaces/produit-interface';
 import { EntreeInterface } from '../../../interfaces/entree.interface';
+import { noSpecialCharactersValidator } from '../../../MesRestriction/noSpecialCharactersValidator';
+import { dateValidator } from '../../../MesRestriction/dateValidator';
 
 @Component({
   selector: 'app-add-entree-component',
@@ -36,10 +38,10 @@ export class AddEntreeComponent implements OnInit{
 
   initEntreeForm(){
     this.entreeForm = this.fb.group({
-      produitId: ['', Validators.required],
+      produitId: ['', Validators.required, noSpecialCharactersValidator],
       produitText: [''],
-      stock: [0, Validators.required],
-      date: ['', Validators.required],
+      stock: [0, Validators.required, noSpecialCharactersValidator],
+      date: ['', Validators.required, dateValidator],
     });
   }
 

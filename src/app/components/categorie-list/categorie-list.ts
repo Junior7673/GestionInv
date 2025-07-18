@@ -4,6 +4,7 @@ import { CategorieService } from '../../services/categorie-service';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CategorieFilterPipe } from '../../pipes/categorie-filter-pipe';
 
 @Component({
   selector: 'app-categorie-list',
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    CategorieFilterPipe
   ],
   templateUrl: './categorie-list.html',
   styleUrl: './categorie-list.css'
@@ -19,6 +21,7 @@ import { Router } from '@angular/router';
 
 export class CategorieList implements OnInit{
   categorieForm!: FormGroup;
+  termeRecherche: string = '';
 
   categories: CategorieInterface[] = [];
 

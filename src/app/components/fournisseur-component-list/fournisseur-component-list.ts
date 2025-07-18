@@ -4,6 +4,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FournisseurInterface } from '../../interfaces/fournisseur-interface';
 import { FournisseurService } from '../../services/fournisseur-service';
 import { Router } from '@angular/router';
+import { FournisseurFilterPipe } from '../../pipes/fournisseur-filter-pipe';
 
 @Component({
   selector: 'app-fournisseur-component-list',
@@ -11,13 +12,15 @@ import { Router } from '@angular/router';
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    FournisseurFilterPipe
   ],
   templateUrl: './fournisseur-component-list.html',
   styleUrl: './fournisseur-component-list.css'
 })
 export class FournisseurComponentList implements OnInit {
   fournisseurForm!: FormGroup;
+  fournisseurTerm: string = '';
 
   fournisseurs: FournisseurInterface[] = [];
 

@@ -1,0 +1,50 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Ajouter une entrée</h2>
+  <div class="mb-3">
+    <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+  </div>
+
+  <form [formGroup]="entreeForm" (ngSubmit)="update()" class="card p-4 shadow-sm">
+    <div class="mb-3">
+      <label class="form-label">Produit</label>
+      <input type="text" formControlName="produitId" style="display:none">
+      <input type="text" formControlName="produitText" class="form-control" placeholder="Entrez le produit" (keyup)="searchProduit()">
+      @if(produits.length > 0){
+        <div class="list-group">
+            @for(prod of produits; track prod.id){
+                <div class="list-group-item" (click)="pickProduit(prod)">{{prod.nomprod}}</div>
+            }
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Stock</label>
+      <input type="text" formControlName="stock" class="form-control" placeholder="Entrez le Stock">
+
+      <div *ngIf="entreeForm.get('stock')?.hasError('specialChars') && entreeForm.get('stock')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div>
+
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input type="date" formControlName="date" class="form-control" placeholder="Entrez La date">
+
+    <div *ngIf="entreeForm.get('date')?.hasError('futureDate') && entreeForm.get('date')?.touched">
+       <p class="error-message">La date ne peut pas être dans le futur.</p>
+    </div>
+    <div *ngIf="entreeForm.get('date')?.hasError('outdatedDate') && entreeForm.get('date')?.touched">
+      <p class="error-message">La date doit être postérieure à l’an 2000.</p>
+    </div>
+    <div *ngIf="entreeForm.get('date')?.hasError('invalidDate') && entreeForm.get('date')?.touched">
+      <p class="error-message">Format de date invalide.</p>
+    </div>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </form>
+</div>

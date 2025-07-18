@@ -2,7 +2,13 @@
   <h2 class="text-center mb-4">Liste des Fournisseurs</h2>
   <div class="mb-3">
     <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+    <input type="text"
+         [(ngModel)]="fournisseurTerm"
+         placeholder="🔍 Rechercher un fournisseur..."
+         class="form-control search-input"
+    />
   </div>
+
 
   <table class="table table-bordered shadow-sm">
     <thead class="table-light">
@@ -15,8 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let fourni of fournisseurs; let i = index">
-        <td>{{ i + 1 }}</td>
+<tr *ngFor="let fourni of fournisseurs | fournisseurFilter: fournisseurTerm; let i = index">        <td>{{ i + 1 }}</td>
         <td>{{ fourni.nomfourni }}</td>
         <td>{{ fourni.telephonefourni }}</td>
         <td>{{ fourni.adressefourni }}</td>

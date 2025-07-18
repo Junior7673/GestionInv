@@ -55,8 +55,22 @@ export class SortieService{
         error: err => reject(err)
       });
     });
-  }
+  } 
 
+  
+    update(sortie: SortieInterface): Promise<SortieInterface>{
+      return new Promise<SortieInterface>((resolve, reject)=>{
+        this.http.put<SortieInterface>(`${this.apiUrl}`, sortie).subscribe(
+          (res:any)=>{
+            resolve(<SortieInterface> res);
+          },
+          (error)=>{
+            reject(error);
+          }
+        );
+      });
+    }
+ 
 
     create(sortie: SortieInterface): Promise<SortieInterface> {
       return new Promise<SortieInterface>((resolve, reject)=>{

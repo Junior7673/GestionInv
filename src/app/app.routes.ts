@@ -7,20 +7,33 @@ import { CategorieList } from './components/categorie-list/categorie-list';
 import { CategorieUpdate } from './components/categorie-update/categorie-update';
 import { FournisseurComponentList } from './components/fournisseur-component-list/fournisseur-component-list';
 import { FournisseurComponentUpdate } from './components/fournisseur-component-update/fournisseur-component-update';
-import { ProduitComponentList } from './components/produit-component-list/produit-component-list';
-import { ProduitComponentUpdate } from './components/produit-component-update/produit-component-update';
-
 export const routes: Routes = [
   { 
     path: '', 
     // ceci est un lazy load. ça permet de chargé le component uniquement quand cet url est appelé. ainsi ça réduit la charge de l'appli
-    //essaie de faire pareil avec le reste après
     loadComponent: () => import('./components/dashboard-component/dashboard-component').then(m => m.DashboardComponent)
   },
-  { path: 'produit', component: ProduitComponent },
-  { path: 'produits', component: ProduitComponentList},
-  { path: 'produit/ajouter', component: ProduitComponentUpdate },     
-  { path: 'produit/:id', component: ProduitComponentUpdate },    
+
+  { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
+
+  //{ path: 'produit', component: ProduitComponent },
+  { path: 'produit', 
+    loadComponent: () => import('./components/produit-component/produit-component').then(m => m.ProduitComponent),
+  },
+  //{ path: 'produits', component: ProduitComponentList},
+  { path: 'produits', 
+    loadComponent: () => import('./components/produit-component-list/produit-component-list').then(m => m.ProduitComponentList),
+  },
+ // { path: 'produit/ajouter', component: ProduitComponentUpdate }, 
+   { path: 'produit/ajouter', 
+    loadComponent: () => import('./components/produit-component-update/produit-component-update').then(m => m.ProduitComponentUpdate),
+  },  
+  //{ path: 'produit/:id', component: ProduitComponentUpdate },
+   { path: 'produit/:id', 
+    loadComponent: () => import('./components/produit-component-update/produit-component-update').then(m => m.ProduitComponentUpdate),
+  },    
   
   //Fournisseur
   { path: 'fournisseur', component: FournisseurComponent },
@@ -34,22 +47,34 @@ export const routes: Routes = [
   { path: 'modifier-categorie/:id', component: CategorieComponent },  
   { path: 'categories', component: CategorieList},
 
+//Sortie
   {
-    path: 'sorties',
-    loadComponent: () => import('./components/sortie/list-sortie-component/list-sortie-component').then(m => m.ListSortieComponent)
+    path: 'sorties',loadComponent: () => import('./components/sortie/list-sortie-component/list-sortie-component').then(m => m.ListSortieComponent)
   },
   {
     path: 'sortie',
     loadComponent: () => import('./components/sortie/add-sortie-component/add-sortie-component').then(m => m.AddSortieComponent)
   },
   {
-    path: 'entrees',
-    loadComponent: () => import('./components/entree/list-entree-component/list-entree-component').then(m => m.ListEntreeComponent)
+    path: 'sortie/:id',
+    loadComponent: () => import('./components/sortie-update/sortie-update').then(m => m.SortieUpdate)
+  },
+
+  //Entree
+  {
+    path: 'entrees', loadComponent: () => import('./components/entree/list-entree-component/list-entree-component').then(m => m.ListEntreeComponent)
   },
   {
-    path: 'entree',
-    loadComponent: () => import('./components/entree/add-entree-component/add-entree-component').then(m => m.AddEntreeComponent)
+    path: 'entree',loadComponent: () => import('./components/entree/add-entree-component/add-entree-component').then(m => m.AddEntreeComponent)
+  },
+  {
+    path: 'entree/:id',
+    loadComponent: () => import('./components/entree-update/entree-update').then(m => m.EntreeUpdate)
+  },
+
+
+  //Connexion
+  { path: 'login',
+     loadComponent: () => import('./components/login-component/login-component').then(m => m.LoginComponent)
   }
-
-
 ];

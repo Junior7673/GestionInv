@@ -2,6 +2,11 @@
   <h2 class="text-center mb-4">Liste des Entrées</h2>
   <div class="mb-3">
     <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+    <input type="text"
+         [(ngModel)]="searchTerm"
+         placeholder="🔍 Rechercher par produit, stock, date..."
+         class="form-control search-input"
+    />
   </div>
 
   <table class="table table-bordered shadow-sm">
@@ -15,13 +20,14 @@
       </tr>
     </thead>
     <tbody>
-        @for(entree of entrees; track entree.id){
+          @for(entree of filteredEntrees; track entree.id){            
             <tr>
                 <td>{{ entree.id }}</td>
                 <td>{{ entree.nomprod }}</td>
                 <td>{{ entree.stock }}</td>
                 <td>{{ entree.date }}</td>
                 <td>
+                  <button class="btn btn-sm btn-warning me-2" (click)="modifierEntree(entree.id)">Modifier</button>
                 <button class="btn btn-sm btn-danger" (click)="supp(entree.id)">Supprimer</button>
                 </td>
             </tr>

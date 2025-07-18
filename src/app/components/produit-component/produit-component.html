@@ -8,21 +8,37 @@
     <div class="mb-3">
       <label class="form-label">Nom du produit</label>
       <input type="text" formControlName="nomprod" class="form-control" placeholder="Entrez le nom du produit">
+
+      <div *ngIf="produitForm.get('nomprod')?.hasError('specialChars') && produitForm.get('nomprod')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Prix</label>
       <input type="number" formControlName="prixprod" class="form-control" placeholder="Entrez le prix">
+
+      <div *ngIf="produitForm.get('prixprod')?.hasError('specialChars') && produitForm.get('prixprod')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Stock</label>
       <input type="number" formControlName="stockprod" class="form-control" placeholder="Entrez le stock disponible">
+
+    <div *ngIf="produitForm.get('stockprod')?.hasError('specialChars') && produitForm.get('stockprod')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div>  
     </div>
 
     <div class="mb-3">
       <label class="form-label">Seuil d'alerte</label>
       <input type="number" formControlName="seuilAlerteprod" class="form-control" placeholder="Entrez le seuil d'alerte">
+
+      <div *ngIf="produitForm.get('seuilAlerteprod')?.hasError('specialChars') && produitForm.get('seuilAlerteprod')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div> 
     </div>
 
     <div class="mb-3">

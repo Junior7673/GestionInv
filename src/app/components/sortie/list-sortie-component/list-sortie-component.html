@@ -2,6 +2,11 @@
   <h2 class="text-center mb-4">Liste des Sorties</h2>
   <div class="mb-3">
     <button class="btn btn-secondary" (click)="goBack()">← Retour</button>
+    <input type="text"
+         [(ngModel)]="searchTerm"
+         placeholder="🔍 Rechercher par produit, stock, date..."
+         class="form-control search-input"
+    />
   </div>
 
   <table class="table table-bordered shadow-sm">
@@ -15,21 +20,20 @@
       </tr>
     </thead>
     <tbody>
-        @for(sortie of sorties; track sortie.id){
-            <tr>
-                <td>{{ sortie.id }}</td>
-                <td>{{ sortie.nomprod }}</td>
-                <td>{{ sortie.stock }}</td>
-                <td>{{ sortie.date }}</td>
-                <td>
-                <button class="btn btn-sm btn-danger" (click)="supp(sortie.id)">Supprimer</button>
-                </td>
-            </tr>
-        }
+      <tr *ngFor="let sortie of filteredSorties; trackBy: trackById">         
+        <td>{{ sortie.id }}</td>
+        <td>{{ sortie.nomprod }}</td>
+        <td>{{ sortie.stock }}</td>
+        <td>{{ sortie.date | date:'shortDate' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="modifierSortie(sortie.id)">Modifier</button>
+          <button class="btn btn-sm btn-danger" (click)="supp(sortie.id)">Supprimer</button>
+        </td>
+      </tr>
     </tbody>
   </table>
 
-  <div *ngIf="sorties.length === 0" class="text-center text-muted">
-    Aucune sorties trouvée.
+  <div *ngIf="filteredSorties.length === 0" class="text-center text-muted">
+    Aucune sortie trouvée.
   </div>
 </div>

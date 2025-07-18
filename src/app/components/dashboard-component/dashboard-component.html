@@ -1,7 +1,8 @@
+ <!--
 <div class="container mt-5">
   <h2 class="text-center mb-4">Tableau de bord - Gestion d'inventaire</h2>
-  <div class="row g-4">
-    <!-- PRODUITS -->
+  <div class="row g-4"> -->
+    <!-- PRODUITS 
     <div class="col-md-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
@@ -11,9 +12,9 @@
           <a routerLink="/produits" class="btn btn-primary btn-sm ms-2">Voir</a>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- SORTIE -->
+    <!-- SORTIE 
     <div class="col-md-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
@@ -23,9 +24,9 @@
           <a routerLink="/sorties" class="btn btn-primary btn-sm ms-2">Voir</a>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- ENTREE -->
+    <!-- ENTREE 
     <div class="col-md-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
@@ -35,9 +36,9 @@
           <a routerLink="/entrees" class="btn btn-primary btn-sm ms-2">Voir</a>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- FOURNISSEURS -->
+    <!-- FOURNISSEURS 
     <div class="col-md-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
@@ -47,9 +48,9 @@
           <a routerLink="/fournisseurs" class="btn btn-success btn-sm ms-2">Voir</a>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- CATEGORIES -->
+    <!-- CATEGORIES 
     <div class="col-md-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
@@ -61,4 +62,52 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<!--<app-header-component></app-header-component>
+
+<div class="container my-4 flex-grow-1">
+  <router-outlet></router-outlet>
 </div>
+
+<app-footer-component></app-footer-component> -->
+
+<div class="d-flex flex-column min-vh-100">
+
+  <div class="d-flex flex-grow-1">
+
+    <!-- SIDEBAR -->
+    <div class="bg-primary text-white p-3 sidebar" style="width: 250px;">
+      <h5 class="text-center mb-4">Menu</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a routerLink="/dashboard" class="nav-link text-white">🏠 Accueil</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a routerLink="/produit" class="nav-link text-white">📦 Ajouter Produit</a>
+          <a routerLink="/produits" class="nav-link text-white">Voir</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a routerLink="/categorie" class="nav-link text-white">🗂 Ajouter Catégorie</a>
+          <a routerLink="/categories" class="nav-link text-white">Voir</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a routerLink="/fournisseur" class="nav-link text-white">🚚 Ajouter Fournisseur</a>
+          <a routerLink="/fournisseurs" class="nav-link text-white">Voir</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a routerLink="/entree" class="nav-link text-white">➕ Ajouter Entrée</a>
+          <a routerLink="/entrees" class="nav-link text-white">Voir</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a routerLink="/sortie" class="nav-link text-white">➖ Ajouter Sortie</a>
+          <a routerLink="/sorties" class="nav-link text-white">Voir</a>
+        </li>
+      </ul>
+    </div>
+
+    
+  </div>
+
+</div>
+

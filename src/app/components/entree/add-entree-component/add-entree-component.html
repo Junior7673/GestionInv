@@ -21,11 +21,26 @@
     <div class="mb-3">
       <label class="form-label">Stock</label>
       <input type="text" formControlName="stock" class="form-control" placeholder="Entrez le Stock">
+
+      <div *ngIf="entreeForm.get('stock')?.hasError('specialChars') && entreeForm.get('stock')?.touched">
+        <p class="error-message">Les caractères spéciaux ne sont pas autorisés.</p>
+      </div>
+
     </div>
 
     <div class="mb-3">
       <label class="form-label">Date</label>
       <input type="date" formControlName="date" class="form-control" placeholder="Entrez La date">
+
+    <div *ngIf="entreeForm.get('date')?.hasError('futureDate') && entreeForm.get('date')?.touched">
+       <p class="error-message">La date ne peut pas être dans le futur.</p>
+    </div>
+    <div *ngIf="entreeForm.get('date')?.hasError('outdatedDate') && entreeForm.get('date')?.touched">
+      <p class="error-message">La date doit être postérieure à l’an 2000.</p>
+    </div>
+    <div *ngIf="entreeForm.get('date')?.hasError('invalidDate') && entreeForm.get('date')?.touched">
+      <p class="error-message">Format de date invalide.</p>
+    </div>
     </div>
 
     <div class="d-grid">
