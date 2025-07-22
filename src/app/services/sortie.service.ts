@@ -6,86 +6,99 @@ import { ProduitService } from "./produit-service";
 
 @Injectable()
 export class SortieService{
-    apiUrl = 'http://localhost:8080/sortie';
+  apiUrl = 'http://localhost:8080/sortie';
 
-    constructor(private http: HttpClient,
-        private produitService: ProduitService
-    ) { }
+  constructor(private http: HttpClient) { }
 
-    getAll(): Observable<SortieInterface[]> {
-        return this.http.get<SortieInterface[]>(this.apiUrl);
-    }
-
-
-    getById(id: number): Promise<SortieInterface> {
-     return new Promise<SortieInterface>((resolve, reject) => {
-       this.http.get(`${this.apiUrl}/${id}`).subscribe(
-            (res: any)=>{
-            resolve(<SortieInterface>res);
-            },
-            (error: any)=>{
-            reject(error);
-            }
-        )
-        });
-    }
-
-    getAllWithNomProduit(): Promise<SortieInterface[]> {
-    return new Promise((resolve, reject) => {
-      this.produitService.getAll().subscribe({
-        next: (produits) => {
-          const mapProduit = new Map<number, string>();
-          produits.forEach(p => {
-            if (p.id != null) {
-              mapProduit.set(p.id, p.nomprod);
-            }
-          });
-
-          this.getAll().subscribe({
-            next: (sorties) => {
-              const sortiesAvecNom = sorties.map(s => ({
-                ...s,
-                nomprod: mapProduit.get(s.produitId) ?? 'Inconnu'
-              }));
-              resolve(sortiesAvecNom);
-            },
-            error: err => reject(err)
-            });
+  getAll(): Promise<SortieInterface[]> {
+    return new Promise<SortieInterface[]>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}`).subscribe(
+        (res: any)=>{
+          resolve(<SortieInterface[]>res);
         },
-        error: err => reject(err)
-      });
+        (error: any)=>{
+          reject(error);
+        }
+      );
     });
-  } 
+  }
 
-  
-    update(sortie: SortieInterface): Promise<SortieInterface>{
-      return new Promise<SortieInterface>((resolve, reject)=>{
-        this.http.put<SortieInterface>(`${this.apiUrl}`, sortie).subscribe(
+  search(term: string): Promise<SortieInterface[]> {
+    return new Promise<SortieInterface[]>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/search/${term}`).subscribe(
+        (res: any)=>{
+          resolve(<SortieInterface[]>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      );
+    });
+  }
+
+  filterByPeriod(startDate: string, endDate: string): Promise<SortieInterface[]> {
+    return new Promise<SortieInterface[]>((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/period`, {date1: startDate, date2: endDate}).subscribe(
+        (res: any)=>{
+          resolve(<SortieInterface[]>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      );
+    });
+  }
+
+  getById(id: number): Promise<SortieInterface> {
+    return new Promise<SortieInterface>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/${id}`).subscribe(
+        (res: any)=>{
+          resolve(<SortieInterface>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      )
+    });
+  }
+
+  update(sortie: SortieInterface): Promise<SortieInterface>{
+    return new Promise<SortieInterface>((resolve, reject)=>{
+      this.http.put<SortieInterface>(`${this.apiUrl}`, sortie).subscribe(
+        (res:any)=>{
+          resolve(<SortieInterface> res);
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
+  }
+
+
+  create(sortie: SortieInterface): Promise<SortieInterface> {
+    return new Promise<SortieInterface>((resolve, reject)=>{
+      this.http.post<SortieInterface>(this.apiUrl, sortie).subscribe(
           (res:any)=>{
-            resolve(<SortieInterface> res);
+          resolve(<SortieInterface> res);
           },
-          (error)=>{
-            reject(error);
+          (error:any)=>{
+          reject(error);
           }
-        );
-      });
-    }
- 
+      );
+    });
+  }
 
-    create(sortie: SortieInterface): Promise<SortieInterface> {
-      return new Promise<SortieInterface>((resolve, reject)=>{
-        this.http.post<SortieInterface>(this.apiUrl, sortie).subscribe(
-            (res:any)=>{
-            resolve(<SortieInterface> res);
-            },
-            (error:any)=>{
-            reject(error);
-            }
-        );
-        });
-    }
-
-    delete(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
-    }
+  delete(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject)=>{
+      this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe(
+        (res:any)=>{
+          resolve();
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
+  }
 }

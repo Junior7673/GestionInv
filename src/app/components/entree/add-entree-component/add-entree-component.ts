@@ -5,8 +5,7 @@ import { ProduitService } from '../../../services/produit-service';
 import { Router } from '@angular/router';
 import { ProduitInterface } from '../../../interfaces/produit-interface';
 import { EntreeInterface } from '../../../interfaces/entree.interface';
-import { noSpecialCharactersValidator } from '../../../MesRestriction/noSpecialCharactersValidator';
-import { dateValidator } from '../../../MesRestriction/dateValidator';
+import { DateTools } from '../../../tools/date.tools';
 
 @Component({
   selector: 'app-add-entree-component',
@@ -20,6 +19,7 @@ export class AddEntreeComponent implements OnInit{
   produitService = inject(ProduitService);
   router = inject(Router);
   //
+  today = DateTools.getString(new Date());
   entreeForm: FormGroup = new FormGroup({});
   produits : ProduitInterface[] = [];
   produitSelected : ProduitInterface = {
@@ -38,10 +38,10 @@ export class AddEntreeComponent implements OnInit{
 
   initEntreeForm(){
     this.entreeForm = this.fb.group({
-      produitId: ['', Validators.required, noSpecialCharactersValidator],
+      produitId: [0, Validators.required],
       produitText: [''],
-      stock: [0, Validators.required, noSpecialCharactersValidator],
-      date: ['', Validators.required, dateValidator],
+      stock: [0, Validators.required],
+      date: [DateTools.getString(new Date()), Validators.required]
     });
   }
 
@@ -50,6 +50,12 @@ export class AddEntreeComponent implements OnInit{
 
       if(this.produitSelected.id == 0){
         alert('Veuillez choisir un produit !');
+        return;
+      }
+
+      const dateSortie = new Date(this.entreeForm.value['date']);
+      if(dateSortie > new Date() || dateSortie < new Date('1900-01-01')){
+        alert('Date d\'entrée invalide !');
         return;
       }
 

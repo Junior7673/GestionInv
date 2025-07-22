@@ -5,8 +5,7 @@ import { SortieInterface } from '../../../interfaces/sortie.interface';
 import { ProduitInterface } from '../../../interfaces/produit-interface';
 import { ProduitService } from '../../../services/produit-service';
 import { Router } from '@angular/router';
-import { noSpecialCharactersValidator } from '../../../MesRestriction/noSpecialCharactersValidator';
-import { dateValidator } from '../../../MesRestriction/dateValidator';
+import { DateTools } from '../../../tools/date.tools';
 
 @Component({
   selector: 'app-add-sortie-component',
@@ -38,16 +37,15 @@ export class AddSortieComponent implements OnInit{
 
   initSortieForm(){
     this.sortieForm = this.fb.group({
-      produitId: ['',  Validators.required, noSpecialCharactersValidator],
+      produitId: ['',  Validators.required],
       produitText: [''],
-      stock: [0,  Validators.required, noSpecialCharactersValidator],
-      date: ['', Validators.required, dateValidator],
+      stock: [0,  Validators.required],
+      date: [DateTools.getString(new Date()), Validators.required],
     });
   }
 
   onSubmit(){
     if (this.sortieForm.valid) {
-
       if(this.produitSelected.id == 0){
         alert('Veuillez choisir un produit !');
         return;
@@ -62,6 +60,12 @@ export class AddSortieComponent implements OnInit{
 
       if(stockrestant < this.produitSelected.seuilAlerteprod){
         alert('Seuil de stock atteint !');
+        return;
+      }
+
+      const dateSortie = new Date(this.sortieForm.value['date']);
+      if(dateSortie > new Date() || dateSortie < new Date('1900-01-01')){
+        alert('Date de sortie invalide !');
         return;
       }
 
@@ -98,8 +102,8 @@ export class AddSortieComponent implements OnInit{
     this.produits = [];
   }
  
-goBack(): void {
-  window.history.back();
-}
+  goBack(): void {
+    window.history.back();
+  }
 
 }

@@ -1,68 +1,104 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SortieInterface } from '../../../interfaces/sortie.interface';
 import { SortieService } from '../../../services/sortie.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { DateTools } from '../../../tools/date.tools';
 
 @Component({
   selector: 'app-list-sortie-component',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './list-sortie-component.html',
   styleUrl: './list-sortie-component.css'
 })
 export class ListSortieComponent {
   sorties: SortieInterface[] = [];
-    searchTerm: string = '';
+  periodForm: FormGroup = new FormGroup({});
+  term: string = '';
 
   constructor(
     private sortieService: SortieService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.chargerSortie();
+    this.initPeriodForm();
+    this.initSortie();
   }
 
-  chargerSortie(): void {
-    this.sortieService.getAllWithNomProduit()
+  initSortie(): void {
+    this.sortieService.getAll()
+    .then(data => this.sorties = data)
+    .catch(err => {
+      console.error('Erreur lors du chargement des sorties :', err);
+      alert('Erreur de chargement des sorties');
+    });
+  }
+
+  initPeriodForm(){
+    const dateString = DateTools.getString(new Date());
+    this.periodForm = this.fb.group({
+      startDate: [dateString],
+      endDate: [dateString]
+    });
+  }
+
+  searchSortie(){
+    this.sortieService.search(this.term).then(
+      (res)=>{
+        this.sorties = res;
+      },
+      (err)=>{
+        console.log(err);
+        alert("Une erreur est survenue !");
+      }
+    )
+  }
+
+  checkPeriod(startDate: string, endDate: string){
+    if(!startDate || !endDate || startDate == '' || endDate == ''){
+      alert('Veuillez saisir une date de debut et une date de fin !');
+      return false;
+    }
+
+    if(Date.parse(startDate) > Date.parse(endDate)){
+      alert('La date de debut est plus grande que la date de fin !');
+      return false;
+    }
+
+    return true;
+  }
+
+  filterByPeriod(){
+    const startDate = this.periodForm.value['startDate'];
+    const endDate = this.periodForm.value['endDate'];
+
+    if(this.checkPeriod(startDate, endDate)){
+      this.sortieService.filterByPeriod(startDate, endDate)
       .then(data => this.sorties = data)
-      .catch(err => {
-        console.error('Erreur lors du chargement des sorties :', err);
-        alert('Erreur de chargement des sorties');
-      });
+      .catch(err => console.error('Erreur de recherche des entrées :', err));
+    }
   }
-  get filteredSorties(): SortieInterface[] {
-    const terme = this.searchTerm.toLowerCase().trim();
-    return this.sorties.filter(s =>
-      s.nomprod.toLowerCase().includes(terme) ||
-      s.stock.toString().includes(terme) ||
-      new Date(s.date).toLocaleDateString().includes(terme)
-    );
-  }
-
-  modifierSortie(id: number): void {
+  
+  updateSortie(id: number): void {
     this.router.navigate(['sortie/' + id]);
   }
 
-  trackById(index: number, item: SortieInterface): number {
-  return item.id;
-}
-
-
-  supp(id: number): void {
+  removeSortie(id: number): void {
     if (confirm('Confirmer la suppression ?')) {
-      this.sortieService.delete(id).subscribe({
-        next: () => {
-          alert('Sortie supprimée avec succès.');
-          this.chargerSortie();
-        },
-        error: err => alert('Erreur lors de la suppression : ' + err.message)
+      this.sortieService.delete(id).then(() => {
+        alert('Sortie supprimée avec succès.');
+        this.initSortie();
+      }).catch((error) => {
+        console.log(error);
+        alert("Une erreur est survenue !");
       });
     }
   }
    
-goBack(): void {
-  window.history.back();
-}
+  goToNewSortie(): void {
+    this.router.navigate(['sortie']);
+  }
 }

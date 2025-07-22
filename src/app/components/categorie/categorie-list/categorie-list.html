@@ -1,0 +1,46 @@
+<div class="px-12 py-2">
+  <div class="lg:flex lg:items-center lg:justify-between mb-8">
+    <div class="min-w-0 flex-1">
+      <h2 class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Catégories</h2>
+    </div>
+    <div class="mt-5 flex lg:mt-0 lg:ml-4">
+      <span class="sm:ml-3">
+        <button type="button" (click)="goToNewCategory()" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer">
+          Nouvel Catégorie
+        </button>
+      </span>
+    </div>
+  </div>
+
+
+  <div class="filters flex justify-between mb-6">
+    <div class="sm w-1/3">
+      <label for="stockprod" class="block text-sm font-medium text-gray-900">Rechercher</label>
+      <div class="mt-1">
+        <input id="stockprod" type="text" [(ngModel)]="term" (keyup)="searchCategory()" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+      </div>
+    </div>
+
+  </div>
+    
+  <div class="ptable flex flex-col gap-1">
+    <div class="flex justify-between border-b border-gray-300 py-2 font-bold thead">
+      <div class="px-2 w-1/10">#</div>
+      <div class="px-2 w-full">Nom</div>
+      <div class="px-2 w-1/5">Actions</div>
+    </div>
+    @for(category of categories; track category.id; let i = $index){
+      <div class="flex justify-between border-b border-gray-300 py-1 tbody">
+        <div class="px-2 w-1/10">{{i}}</div>
+        <div class="px-2 w-full capitalize">{{category.nomcat}}</div>
+        <div class="px-2 w-1/5 flex gap-1">
+          <button (click)="updateCategory(category.id)" class="px-3 py-2 text-center text-white bg-yellow-600 border border-yellow-600 rounded active:text-yellow-500 hover:bg-transparent hover:text-yellow-600 focus:outline-none focus:ring cursor-pointer">Modifier</button>
+          <button (click)="removeCategory(category.id)" class="px-3 py-2 text-center text-white bg-red-600 border border-red-600 rounded active:text-red-500 hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring cursor-pointer">Supprimer</button>
+        </div>
+      </div>
+    }
+    @empty {
+      <h1 class="text-center text-gray-500 mt-4">Aucune Catégorie</h1>
+    }
+  </div>
+</div>

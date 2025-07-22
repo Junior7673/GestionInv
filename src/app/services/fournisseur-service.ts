@@ -10,13 +10,19 @@ export class FournisseurService {
   apiUrl = 'http://localhost:8080/fournisseur';
 
 constructor(private http: HttpClient) { }
-  getAll(): Observable<FournisseurInterface[]> {
-    return this.http.get<FournisseurInterface[]>(this.apiUrl);
+  getAll(): Promise<FournisseurInterface[]> {
+    return new Promise<FournisseurInterface[]>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}`).subscribe(
+        (res: any)=>{
+          resolve(<FournisseurInterface[]>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      );
+    });
   }
 
-  /*getById(id: number): Observable<FournisseurInterface> {
-    return this.http.get<FournisseurInterface>(`${this.apiUrl}/${id}`);
-  }*/
  getById(id: number): Promise<FournisseurInterface> {
      return new Promise<FournisseurInterface>((resolve, reject) => {
        this.http.get(`${this.apiUrl}/${id}`).subscribe(
@@ -47,13 +53,9 @@ constructor(private http: HttpClient) { }
     });
   }
 
-  /*create(fournisseur: FournisseurInterface): Observable<FournisseurInterface> {
-    return this.http.post<FournisseurInterface>(this.apiUrl, fournisseur);
-  }*/
   create(fournisseur: FournisseurInterface): Promise<FournisseurInterface> {
-
-      return new Promise<FournisseurInterface>((resolve, reject)=>{
-       this.http.post<FournisseurInterface>(this.apiUrl+'/add', fournisseur).subscribe(
+    return new Promise<FournisseurInterface>((resolve, reject)=>{
+      this.http.post<FournisseurInterface>(this.apiUrl+'/add', fournisseur).subscribe(
          (res:any)=>{
            resolve(<FournisseurInterface> res);
          },
@@ -61,11 +63,11 @@ constructor(private http: HttpClient) { }
            reject(error);
          }
        );
-     });
-    }
+    });
+  }
 
   update(fournisseur: FournisseurInterface): Promise<FournisseurInterface>{
-      return new Promise<FournisseurInterface>((resolve, reject)=>{
+    return new Promise<FournisseurInterface>((resolve, reject)=>{
         this.http.put<FournisseurInterface>(`${this.apiUrl}/`+fournisseur.id, fournisseur).subscribe(
           (res:any)=>{
             resolve(<FournisseurInterface> res);
@@ -77,6 +79,15 @@ constructor(private http: HttpClient) { }
       });
     }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  delete(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject)=>{
+      this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe(
+        (res:any)=>{
+          resolve();
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
   }}

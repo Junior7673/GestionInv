@@ -7,86 +7,98 @@ import { ProduitService } from "./produit-service";
 @Injectable()
 export class EntreeService {
 
-    apiUrl = 'http://localhost:8080/entree';
+  apiUrl = 'http://localhost:8080/entree';
 
-    constructor(private http: HttpClient,
-        private produitService: ProduitService
-    ) { }
-    
+  constructor(private http: HttpClient) { }
 
-    getAll(): Observable<EntreeInterface[]> {
-        return this.http.get<EntreeInterface[]>(this.apiUrl);
-    }
-
-    getAllWithNomProduit(): Promise<EntreeInterface[]> {
-    return new Promise((resolve, reject) => {
-      this.produitService.getAll().subscribe({
-        next: (produits) => {
-          const mapProduit = new Map<number, string>();
-          produits.forEach(p => {
-            if (p.id != null) {
-              mapProduit.set(p.id, p.nomprod);
-            }
-          });
-
-          this.getAll().subscribe({
-            next: (entrees) => {
-              const entreesAvecNom = entrees.map(e => ({
-                ...e,
-                nomprod: mapProduit.get(e.produitId) ?? 'Inconnu'
-              }));
-              resolve(entreesAvecNom);
-            },
-            error: err => reject(err)
-          });
+  getAll(): Promise<EntreeInterface[]> {
+    return new Promise<EntreeInterface[]>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}`).subscribe(
+        (res: any)=>{
+          resolve(<EntreeInterface[]>res);
         },
-        error: err => reject(err)
-      });
+        (error: any)=>{
+          reject(error);
+        }
+      );
     });
   }
 
-
-
-    getById(id: number): Promise<EntreeInterface> {
-     return new Promise<EntreeInterface>((resolve, reject) => {
-       this.http.get(`${this.apiUrl}/${id}`).subscribe(
-            (res: any)=>{
-            resolve(<EntreeInterface>res);
-            },
-            (error: any)=>{
-            reject(error);
-            }
-        )
-        });
-    }
-
-    create(fournisseur: EntreeInterface): Promise<EntreeInterface> {
-      return new Promise<EntreeInterface>((resolve, reject)=>{
-        this.http.post<EntreeInterface>(this.apiUrl, fournisseur).subscribe(
-            (res:any)=>{
-            resolve(<EntreeInterface> res);
-            },
-            (error:any)=>{
-            reject(error);
-            }
-        );
-        });
-    }
-
-    update(entree: EntreeInterface): Promise<EntreeInterface>{
-          return new Promise<EntreeInterface>((resolve, reject)=>{
-            this.http.put<EntreeInterface>(`${this.apiUrl}`, entree).subscribe(
-              (res:any)=>{
-                resolve(<EntreeInterface> res);
-              },
-              (error)=>{
-                reject(error);
-              }
-            );
-          });
+  search(term: string): Promise<EntreeInterface[]> {
+    return new Promise<EntreeInterface[]>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/search/${term}`).subscribe(
+        (res: any)=>{
+          resolve(<EntreeInterface[]>res);
+        },
+        (error: any)=>{
+          reject(error);
         }
+      );
+    });
+  }
 
-    delete(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
-    }
+  filterByPeriod(startDate: string, endDate: string): Promise<EntreeInterface[]> {
+    return new Promise<EntreeInterface[]>((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/period`, {date1: startDate, date2: endDate}).subscribe(
+        (res: any)=>{
+          resolve(<EntreeInterface[]>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      );
+    });
+  }
+
+  getById(id: number): Promise<EntreeInterface> {
+    return new Promise<EntreeInterface>((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/${id}`).subscribe(
+          (res: any)=>{
+          resolve(<EntreeInterface>res);
+          },
+          (error: any)=>{
+          reject(error);
+          }
+      )
+      });
+  }
+
+  create(fournisseur: EntreeInterface): Promise<EntreeInterface> {
+    return new Promise<EntreeInterface>((resolve, reject)=>{
+      this.http.post<EntreeInterface>(this.apiUrl, fournisseur).subscribe(
+          (res:any)=>{
+          resolve(<EntreeInterface> res);
+          },
+          (error:any)=>{
+          reject(error);
+          }
+      );
+      });
+  }
+
+  update(entree: EntreeInterface): Promise<EntreeInterface>{
+    return new Promise<EntreeInterface>((resolve, reject)=>{
+      this.http.put<EntreeInterface>(`${this.apiUrl}`, entree).subscribe(
+        (res:any)=>{
+          resolve(<EntreeInterface> res);
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
+  }
+
+  delete(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject)=>{
+      this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe(
+        (res:any)=>{
+          resolve();
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
+  }
 }

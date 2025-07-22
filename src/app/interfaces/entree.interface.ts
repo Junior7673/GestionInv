@@ -3,6 +3,6 @@ export interface EntreeInterface {
     stock: number;
     date: Date;
     produitId: number;
-        nomprod?: string;
+    nomprod?: string;
 
 }

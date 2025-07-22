@@ -15,8 +15,17 @@ export class CategorieService {
 
 
   constructor(private http: HttpClient) { }
-  getAll(): Observable<CategorieInterface[]> {
-    return this.http.get<CategorieInterface[]>(this.apiUrl);
+  getAll(): Promise<CategorieInterface[]> {
+    return new Promise<CategorieInterface[]>((resolve, reject)=>{
+      this.http.get(`${this.apiUrl}`).subscribe(
+        (res: any)=>{
+          resolve(<CategorieInterface[]>res);
+        },
+        (error: any)=>{
+          reject(error);
+        }
+      )
+    });
   }
 
   //On ajoute une méthode pour rechercher une catégorieh
@@ -82,8 +91,17 @@ export class CategorieService {
     });
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  delete(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject)=>{
+      return this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe(
+        (res:any)=>{
+          resolve();
+        },
+        (error)=>{
+          reject(error);
+        }
+      );
+    });
   }
   
 }
