@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-topbar-component',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 export class TopbarComponent {
 
   router = inject(Router);
+  authService = inject(AuthService);
 
   toProduit(){
     this.router.navigate(['produits']);
@@ -29,6 +31,12 @@ export class TopbarComponent {
 
   toFournisseur(){
     this.router.navigate(['fournisseurs']);
+  }
+
+  logout(){
+    console.log("logout");
+    this.authService.logout();
+    this.router.navigate(['nolay/login']);
   }
 
 }

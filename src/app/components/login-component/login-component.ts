@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
@@ -17,7 +17,7 @@ import { passwordStrengthValidator } from '../../MesRestriction/passwordStrength
   templateUrl: './login-component.html',
   styleUrl: './login-component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm: FormGroup;
   errorMessage = '';
 
@@ -26,9 +26,17 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router
   ) {
+    
+  }
+
+  ngOnInit(): void {
+    this.initLoginForm();
+  }
+
+  initLoginForm(){
     this.loginForm = this.fb.group({
-      nomUtilisateur: ['',Validators.required, noSpecialCharactersValidator],
-      motDePasse: ['', Validators.required, passwordStrengthValidator]
+      nomUtilisateur: ['', [Validators.required, noSpecialCharactersValidator]],
+      motDePasse: ['', [Validators.required]]
     });
   }
 
@@ -36,9 +44,11 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const loginData: LoginInterface = this.loginForm.value;
       this.authService.login(loginData).subscribe({
-        next: () => this.router.navigate(['/dashboard']),
-        error: () => this.errorMessage = "Nom d'utilisateur ou mot de passe incorrect"
+        next: () => this.router.navigate(['/produits']),
+        error: () => alert("Nom d'utilisateur ou mot de passe incorrect")
       });
+    }else{
+      alert("Identifiants de connexion invalide !");
     }
   }
 
