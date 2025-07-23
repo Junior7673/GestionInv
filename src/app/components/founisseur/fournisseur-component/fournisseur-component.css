@@ -7,3 +7,18 @@ form {
   margin: auto;
 }
 
+input.ng-valid.ng-touched {
+  border: 2px solid #28a745; /* Vert validation */
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid #dc3545; /* Rouge erreur */
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+

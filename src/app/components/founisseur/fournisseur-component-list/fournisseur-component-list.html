@@ -28,6 +28,7 @@
       <div class="px-2 w-1/10">#</div>
       <div class="px-2 w-1/2">Nom</div>
       <div class="px-2 w-1/4">Téléphone</div>
+      <div class="px-2 w-1/4">Adresse</div>
       <div class="px-2 w-1/5">Actions</div>
     </div>
     @for(fournisseur of fournisseurs; track fournisseur.id; let i = $index){
@@ -35,6 +36,7 @@
         <div class="px-2 w-1/10">{{i+1}}</div>
         <div class="px-2 w-1/2 capitalize">{{fournisseur.nomfourni}}</div>
         <div class="px-2 w-1/4">{{fournisseur.telephonefourni}}</div>
+        <div class="px-2 w-1/4">{{fournisseur.adressefourni}}</div>
         <div class="px-2 w-1/5 flex gap-1">
           <button (click)="updateFournisseur(fournisseur.id)" class="px-3 py-2 text-center text-white bg-yellow-600 border border-yellow-600 rounded active:text-yellow-500 hover:bg-transparent hover:text-yellow-600 focus:outline-none focus:ring cursor-pointer">Modifier</button>
           <button (click)="removeFournisseur(fournisseur.id)" class="px-3 py-2 text-center text-white bg-red-600 border border-red-600 rounded active:text-red-500 hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring cursor-pointer">Supprimer</button>

@@ -5,7 +5,9 @@ import { LoginInterface } from '../interfaces/login-interface';
 import { LoginResponse } from '../interfaces/login-response-interface';
 import { isPlatformBrowser } from '@angular/common';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root' // 👈 permet l’injection automatique
+})
 export class AuthService {
   private apiUrl = 'http://localhost:8080/auth';
 
@@ -37,7 +39,8 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     if (isPlatformBrowser(this.platformId)) {
-      return !localStorage.getItem('token');
+      //return !localStorage.getItem('token');
+      return !!localStorage.getItem('token'); // TRUE si le token existe
     }else{
       return false;
     }

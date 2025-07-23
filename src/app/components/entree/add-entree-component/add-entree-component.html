@@ -34,9 +34,17 @@
         </div>
 
         <div class="sm:col-span-6">
+
           <label for="date" class="block text-sm/6 font-medium text-gray-900">Date</label>
           <div class="mt-2">
             <input id="date" type="date" formControlName="date" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+            <div *ngIf="entreeForm.get('date')?.errors as errors">
+            <div *ngIf="errors.invalidDate" class="text-red-600 text-sm">Format de date invalide.</div>
+            <div *ngIf="errors.futureDate" class="text-red-600 text-sm">La date ne peut pas être dans le futur.</div>
+            <div *ngIf="errors.outdatedDate" class="text-red-600 text-sm">La date doit être après 2000.</div>
+          </div>
+
+
           </div>
         </div>
 

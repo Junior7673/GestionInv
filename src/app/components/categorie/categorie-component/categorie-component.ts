@@ -29,7 +29,7 @@ export class CategorieComponent implements OnInit{
 
   initCategorieForm(){
     this.categoryForm = this.fb.group({
-      nomcat: ['', Validators.required],
+      nomcat: ['', [Validators.required, noSpecialCharactersValidator]],
       descriptioncat: ['']
     });
   }

@@ -1,0 +1,81 @@
+/* Fond général */
+body {
+  background-color: #f0f8ff; /* Bleu très clair */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Conteneur du formulaire */
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 170, 255, 0.15);
+}
+
+/* Titre */
+.container h3 {
+  text-align: center;
+  color: #0077cc;
+  margin-bottom: 20px;
+}
+
+/* Champs formulaire */
+.form-label {
+  font-weight: 600;
+  color: #005999;
+}
+
+.form-control {
+  border: 2px solid #cce7ff;
+  border-radius: 6px;
+  padding: 10px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #3399ff;
+  box-shadow: 0 0 5px rgba(0, 153, 255, 0.3);
+  outline: none;
+}
+
+/* Sélecteur */
+.form-select {
+  border: 2px solid #cce7ff;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #f8fbff;
+}
+
+/* Bouton */
+.btn-success {
+  background-color: #3399ff;
+  border-color: #3399ff;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #0077cc;
+  border-color: #0077cc;
+}
+
+/* Messages d'erreur ou de succès */
+.error-message {
+  color: #cc0000;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.alert-danger {
+  background-color: #ffe6e6;
+  border-left: 5px solid #ff4d4d;
+  color: #990000;
+}
+
+.alert-success {
+  background-color: #e6f7ff;
+  border-left: 5px solid #00bfff;
+  color: #006699;
+}

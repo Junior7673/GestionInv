@@ -31,18 +31,33 @@ export class ProduitService {
        });
      }
 
+  
   getAll(): Promise<ProduitInterface[]> {
-    return new Promise((resolve, reject) => {
-      this.http.get(`${this.apiUrl}`).subscribe(
-        (res: any)=>{
-          resolve(<ProduitInterface[]>res);
-        },
-        (error: any)=>{
-          reject(error);
-        }
-      )
-    });
-  }
+  return new Promise((resolve, reject) => {
+    this.http.get(`${this.apiUrl}`).subscribe(
+      async (res: any) => {
+        const categories = await this.categorieService.getAll();
+        const fournisseurs = await this.fournisseurService.getAll();
+
+        const enrichis = res.map((prod: ProduitInterface) => {
+          const cat = categories.find(c => c.id === prod.categorieId);
+          const four = fournisseurs.find(f => f.id === prod.fournisseurId);
+          return {
+            ...prod,
+            nomcat: cat?.nomcat ?? '',
+            nomfourni: four?.nomfourni ?? ''
+          };
+        });
+
+        resolve(enrichis);
+      },
+      (error: any) => {
+        reject(error);
+      }
+    );
+  });
+}
+
 
   filterByCategory(categorieId: number): Promise<ProduitInterface[]> {
     return new Promise((resolve, reject) => {

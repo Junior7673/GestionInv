@@ -29,7 +29,7 @@ export class CategorieService {
   }
 
   //On ajoute une méthode pour rechercher une catégorieh
-  //en fonction du nom de la catégorie ou peut importe comment tu l'as appeléh
+  //en fonction du nom de la catégorie ou peut importe comment tu l'as appele
   searchbyName(term: string){
     return new Promise<CategorieInterface[]>((resolve, reject) => {
       //créer un endpoint 'search' dans ton backend qui renvoie une liste catégorie selon la clause

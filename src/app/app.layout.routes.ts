@@ -2,11 +2,18 @@ import { Routes } from "@angular/router";
 import { AuthGuard } from "./services/auth.guard";
 
 export default [
-    /*{
+    {
         path: '',
         redirectTo: 'produits',
         pathMatch: 'full'
-    },*/
+    },
+    {
+        path: 'register', loadComponent: () => import('./components/register-component/register-component').then(m => m.RegisterComponent)
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('./components/login-component/login-component').then(m => m.LoginComponent)
+    },
     { 
         path: 'produits', 
         canActivate: [AuthGuard],
@@ -82,4 +89,5 @@ export default [
         canActivate: [AuthGuard],
         loadComponent: () => import('./components/entree/entree-update/entree-update').then(m => m.EntreeUpdate)
     },
+    
 ] as Routes;

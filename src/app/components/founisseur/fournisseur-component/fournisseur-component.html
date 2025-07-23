@@ -12,27 +12,43 @@
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
         <div class="sm:col-span-6">
+          
+
           <label for="nomfourni" class="block text-sm/6 font-medium text-gray-900">Nom</label>
+          <div class="sm:col-span-6">
+
+          <div *ngIf="fournisseurForm.get('nomfourni')?.hasError('specialChars') && fournisseurForm.get('nomfourni')?.touched">
+            <p class="text-red-600 text-sm">Caractères spéciaux non autorisés.</p>
+          </div>
+
           <div class="mt-2">
-            <input id="nomfourni" type="text" formControlName="nomfourni" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 capitalize" />
+            <input id="nomfourni" type="text" formControlName="nomfourni" placeholder="Veuillez saisir le nom du fournisseur" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 capitalize" />
           </div>
         </div>
 
         <div class="sm:col-span-6">
+          <div *ngIf="fournisseurForm.get('telephonefourni')?.hasError('invalidTelephone') && fournisseurForm.get('telephonefourni')?.touched" class="text-danger">
+              <p class="text-red-600 text-sm">Numéro invalide. Utilisez uniquement des chiffres, espaces, ou préfixe international.</p>
+          </div>
+
           <label for="telephonefourni" class="block text-sm/6 font-medium text-gray-900">Téléphone</label>
           <div class="mt-2">
-            <input id="telephonefourni" type="text" formControlName="telephonefourni" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 capitalize" />
+            <input id="telephonefourni" type="text" formControlName="telephonefourni" placeholder="Indiquer le préfixe +226" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 capitalize" />
           </div>
         </div>
 
         <div class="sm:col-span-6">
+          <div *ngIf="fournisseurForm.get('adressefourni')?.hasError('invalidEmail') && fournisseurForm.get('adressefourni')?.touched">
+            <p class="error-message">Format d'adresse invalide. Utilise : prenomnomXX&#64;gmail ou prenomnomXX&#64;gmail.com</p>
+          </div>
+
           <label for="adressefourni" class="block text-sm/6 font-medium text-gray-900">Adresse</label>
           <div class="mt-2">
-            <input id="adressefourni" type="text" formControlName="adressefourni" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 capitalize" />
+            <input id="adressefourni" type="text" formControlName="adressefourni" placeholder="prenomnomXX@gmail ou prenomnomXX@gmail.com" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 capitalize" />
           </div>
         </div>
 
       </div>
     </div>
   </div>
-</form>
+

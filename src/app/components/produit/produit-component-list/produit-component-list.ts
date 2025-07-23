@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { CategorieInterface } from '../../../interfaces/categorie-interface';
 import { CategorieService } from '../../../services/categorie-service';
 import { Subscription } from 'rxjs';
+import { FournisseurInterface } from '../../../interfaces/fournisseur-interface';
+import { FournisseurService } from '../../../services/fournisseur-service';
 
 @Component({
   selector: 'app-produit-component-list',
@@ -25,17 +27,20 @@ export class ProduitComponentList implements OnInit{
   term: string = '';
   produits: ProduitInterface[] = [];
   categories: CategorieInterface[] = [];
+  fournisseurs: FournisseurInterface[] = [];
   catFilterId: number = 0;
 
   constructor(
     private produitService: ProduitService,
     private categorieService: CategorieService,
+    private fournisseurService: FournisseurService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.initProduits();
     this.initCategories();
+    this.initFournisseurs();
   }
 
   initCategories(){
@@ -47,14 +52,35 @@ export class ProduitComponentList implements OnInit{
     });
   }
 
-  initProduits(): void {
-    this.produitService.getAll()
-      .then(data => this.produits = data)
-      .catch(err => {
-        console.error('Erreur lors du chargement des produits avec noms:', err);
-        alert('Erreur lors du chargement des produits.');
-      });
+  initFournisseurs(){
+    this.fournisseurService.getAll().then((fournisseurs) => {
+      this.fournisseurs = fournisseurs;
+    }).catch((error) => {
+      console.log(error);
+      alert("Une erreur est survenue !");
+    });
   }
+
+  
+  initProduits(): void {
+  this.produitService.getAll()
+    .then(data => {
+      this.produits = data.map(prod => {
+        const cat = this.categories.find(c => c.id === prod.categorieId);
+        const four = this.fournisseurs.find(f => f.id === prod.fournisseurId);
+        return {
+          ...prod,
+          nomcat: cat ? cat.nomcat : '',
+          nomfourni: four ? four.nomfourni : ''
+        };
+      });
+    })
+    .catch(err => {
+      console.error('Erreur lors du chargement des produits:', err);
+      alert('Erreur lors du chargement des produits.');
+    });
+}
+
 
   supprimerProduit(id: number): void {
     if (confirm('Confirmer la suppression ?')) {

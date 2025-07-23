@@ -6,10 +6,12 @@ import { Router } from '@angular/router';
 import { ProduitInterface } from '../../../interfaces/produit-interface';
 import { EntreeInterface } from '../../../interfaces/entree.interface';
 import { DateTools } from '../../../tools/date.tools';
+import { dateValidator } from '../../../MesRestriction/dateValidator';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-entree-component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './add-entree-component.html',
   styleUrl: './add-entree-component.css'
 })
@@ -38,11 +40,14 @@ export class AddEntreeComponent implements OnInit{
 
   initEntreeForm(){
     this.entreeForm = this.fb.group({
-      produitId: [0, Validators.required],
+      produitId: [null, Validators.required],
       produitText: [''],
       stock: [0, Validators.required],
-      date: [DateTools.getString(new Date()), Validators.required]
+      date: ['', [Validators.required, dateValidator]]
     });
+    this.entreeForm.patchValue({ date: DateTools.getString(new Date()) });
+    
+
   }
 
   onSubmit(){
@@ -53,11 +58,39 @@ export class AddEntreeComponent implements OnInit{
         return;
       }
 
-      const dateSortie = new Date(this.entreeForm.value['date']);
+      if (!this.entreeForm.valid) {
+          alert("Veuillez compléter tous les champs obligatoires !");
+          return;
+      }
+
+     /* const dateSortie = new Date(this.entreeForm.value['date']);
       if(dateSortie > new Date() || dateSortie < new Date('1900-01-01')){
         alert('Date d\'entrée invalide !');
         return;
+      }*/
+      if (this.entreeForm.get('date')?.invalid) {
+        const dateControl = this.entreeForm.get('date');
+      if (dateControl?.errors?.['invalidDate']) {
+        alert("Format de date non reconnu !");
+        return;
       }
+      if (dateControl?.errors?.['futureDate']) {
+        alert("La date ne peut pas être dans le futur !");
+        return;
+      }
+      if (dateControl?.errors?.['outdatedDate']) {
+        alert("La date doit être après l'an 2000 !");
+        return;
+      }
+}
+
+      this.entreeForm.markAllAsTouched();
+      this.entreeForm.get('date')?.updateValueAndValidity();
+      this.entreeForm.get('date')?.markAsTouched();
+      console.log("Erreurs de date :", this.entreeForm.get('date')?.errors);
+
+
+
 
       const entree: EntreeInterface  = this.entreeForm.value;
       this.entreeService.create(entree).then((entree: EntreeInterface)=>{

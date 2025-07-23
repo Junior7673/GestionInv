@@ -6,10 +6,11 @@ import { ProduitInterface } from '../../../interfaces/produit-interface';
 import { ProduitService } from '../../../services/produit-service';
 import { Router } from '@angular/router';
 import { DateTools } from '../../../tools/date.tools';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-sortie-component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-sortie-component.html',
   styleUrl: './add-sortie-component.css'
 })
@@ -37,7 +38,7 @@ export class AddSortieComponent implements OnInit{
 
   initSortieForm(){
     this.sortieForm = this.fb.group({
-      produitId: ['',  Validators.required],
+      produitId: [null,  Validators.required],
       produitText: [''],
       stock: [0,  Validators.required],
       date: [DateTools.getString(new Date()), Validators.required],
@@ -45,7 +46,7 @@ export class AddSortieComponent implements OnInit{
   }
 
   onSubmit(){
-    if (this.sortieForm.valid) {
+   /* if (this.sortieForm.valid) {
       if(this.produitSelected.id == 0){
         alert('Veuillez choisir un produit !');
         return;
@@ -79,7 +80,58 @@ export class AddSortieComponent implements OnInit{
       });
     }else{
       alert("Veuillez saisir les champs obligatoires !");
+    }*/
+    const formData = this.sortieForm.value;
+    const stock = formData['stock'];
+    const dateStr = formData['date'];
+    const dateSortie = new Date(dateStr);
+
+// Check produit
+    if (this.produitSelected.id === 0) {
+      alert('Veuillez choisir un produit !');
+      return;
     }
+
+// Check stock
+    if (isNaN(stock) || stock <= 0) {
+       alert('Quantité invalide !');
+       return;
+    }
+
+    if (stock > this.produitSelected.stockprod) {
+      alert('Stock insuffisant !');
+      return;
+    }
+
+    if ((this.produitSelected.stockprod - stock) < this.produitSelected.seuilAlerteprod) {
+       alert('Seuil de stock atteint !');
+      return;
+    }
+
+// Check date
+const [year, month, day] = dateStr.split('-').map(Number);
+if (
+  dateSortie.getFullYear() !== year ||
+  dateSortie.getMonth() + 1 !== month ||
+  dateSortie.getDate() !== day ||
+  dateSortie > new Date() ||
+  dateSortie < new Date('1900-01-01')
+) {
+  alert("Date de sortie invalide !");
+  return;
+}
+
+// Tout est bon → on envoie
+    this.sortieService.create(formData)
+       .then(() => {
+        alert('Sortie créée avec succès !');
+        this.sortieForm.reset();
+    })
+      .catch((err) => {
+      alert('Erreur lors de la création !');
+      console.log(err);
+    });
+
   }
 
   searchProduit(){

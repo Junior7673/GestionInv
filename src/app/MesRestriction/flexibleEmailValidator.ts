@@ -1,12 +1,16 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export function flexibleEmailValidator(control: AbstractControl): ValidationErrors | null {
-  const regex = /^[a-zA-Z]+[0-9]{2}@gmail(\.com)?$/; // accepte @gmail et @gmail.com
-  const inputEmail = control.value?.trim();
+  const value = control.value;
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i; // Le "i" rend insensible à la casse
 
-  const valid = regex.test(inputEmail);
-  return valid ? null : { invalidEmail: true };
+  if (!value || regex.test(value)) {
+    return null; // Champ valide
+  }
+
+  return { flexibleEmail: true }; // Champ invalide
 }
+
 
 /*
 

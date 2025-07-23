@@ -7,6 +7,7 @@ import { CategorieService } from '../../../services/categorie-service';
 import { CategorieInterface } from '../../../interfaces/categorie-interface';
 import { FournisseurService } from '../../../services/fournisseur-service';
 import { FournisseurInterface } from '../../../interfaces/fournisseur-interface';
+import { noSpecialCharactersValidator } from '../../../MesRestriction/noSpecialCharactersValidator';
 
 @Component({
   selector: 'app-produit-component',
@@ -41,10 +42,10 @@ export class ProduitComponent implements OnInit{
 
   initProduitForm(){
     this.produitForm = this.fb.group({
-      nomprod: ['', Validators.required],
-      prixprod: [0, Validators.required,],
-      stockprod: [0, Validators.required],
-      seuilAlerteprod: [0, Validators.required],
+      nomprod: ['', [Validators.required, noSpecialCharactersValidator]],
+      prixprod: [0, [Validators.required, Validators.min(0)]],
+      stockprod: [0, [Validators.required, Validators.min(0)]],
+      seuilAlerteprod: [0, [Validators.required, Validators.min(0)]],
       categorieId: ['', Validators.required],
       categorieTerm: [''], 
       fournisseurId: ['', Validators.required],
